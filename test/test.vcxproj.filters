@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\third_party\gtest\src\gtest_main.cc" />
+    <ClCompile Include="..\third_party\gtest\src\gtest-all.cc" />
+    <ClCompile Include="work_test.cpp">
+      <Filter>work</Filter>
+    </ClCompile>
+    <ClCompile Include="TestApp.cpp" />
+    <ClCompile Include="xbase_test.cpp">
+      <Filter>xbase</Filter>
+    </ClCompile>
+    <ClCompile Include="mongo_test.cpp">
+      <Filter>xdb</Filter>
+    </ClCompile>
+    <ClCompile Include="libgo_test.cpp">
+      <Filter>libgo</Filter>
+    </ClCompile>
+    <ClCompile Include="json_test.cpp">
+      <Filter>encoding</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="work">
+      <UniqueIdentifier>{d1080953-a175-49c0-963a-2730178c69ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{d355cad6-b390-4dfb-b25f-f3cbeec07766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xbase">
+      <UniqueIdentifier>{b0b00da9-fbe9-40e9-80ab-b98c637afec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xdb">
+      <UniqueIdentifier>{d24c94d0-e153-4a09-9933-aa43dba36453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libgo">
+      <UniqueIdentifier>{55847dad-1c3a-47e5-815e-ed25472b7604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="encoding">
+      <UniqueIdentifier>{2a55b354-fa05-44e1-93a6-f2636e0c70fa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="test_common.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="TestApp.h" />
+  </ItemGroup>
+</Project>
