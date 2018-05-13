@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="net">
+      <UniqueIdentifier>{2687dd66-2aeb-4dc0-90bd-13cafd87d084}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="work">
+      <UniqueIdentifier>{d154b9a8-44cc-4473-85a0-5a174a5827d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time">
+      <UniqueIdentifier>{3e156a46-db5f-4f57-abbc-a00de491c859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\http">
+      <UniqueIdentifier>{8f53c082-9c36-4583-bc48-e010f2c13314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{91efd90e-f9e6-4361-9288-e3493e60a9a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config\pb">
+      <UniqueIdentifier>{6c9129de-b880-4f1b-b1d6-8b6903b9dd53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\tcp">
+      <UniqueIdentifier>{8c72478f-9977-4e21-b40f-320ee813f16a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\tcp\conn">
+      <UniqueIdentifier>{be906c32-37df-43cb-b0c1-84176a5d3f8b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="net\MessageFactory.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\MessageHandleManager.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\MessageReceiver.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\MessageRegistry.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\MessagePacket.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="Env.h" />
+    <ClInclude Include="work\WorkerPool.h">
+      <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="work\WorkDispatcher.h">
+      <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="time\TimeUnit.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="net\MessagePtr.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\BufferAllocator.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="time\BuildTime.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\HttpClientWorker.h">
+      <Filter>net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\MessageCounter.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\HttpServerWorker.h">
+      <Filter>net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="net\http\HttpCallback.h">
+      <Filter>net\http</Filter>
+    </ClInclude>
+    <ClInclude Include="config\ConfigReader.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="work\LogicHandler.h">
+      <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="work\LogicManager.h">
+      <Filter>work</Filter>
+    </ClInclude>
+    <ClInclude Include="config\ProtobufMap.h">
+      <Filter>config\pb</Filter>
+    </ClInclude>
+    <ClInclude Include="config\ProtobufReader.h">
+      <Filter>config\pb</Filter>
+    </ClInclude>
+    <ClInclude Include="config\PBConfigManager.h">
+      <Filter>config\pb</Filter>
+    </ClInclude>
+    <ClInclude Include="config\ProtobufConf.h">
+      <Filter>config\pb</Filter>
+    </ClInclude>
+    <ClInclude Include="net\Url.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ClientWorker.h">
+      <Filter>net\tcp\conn</Filter>
+    </ClInclude>
+    <ClInclude Include="net\ServerWorker.h">
+      <Filter>net\tcp\conn</Filter>
+    </ClInclude>
+    <ClInclude Include="net\Session.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\SessionManager.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\CRC32.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="net\SessionStatistics.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\SessionConcreteFactory.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="net\SessionFactory.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="net\MessageReceiver.cpp">
+      <Filter>net\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\MessageRegistry.cpp">
+      <Filter>net\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="Env.cpp" />
+    <ClCompile Include="work\WorkerPool.cpp">
+      <Filter>work</Filter>
+    </ClCompile>
+    <ClCompile Include="net\MessageFactory.cpp">
+      <Filter>net\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\MessageHandleManager.cpp">
+      <Filter>net\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\BufferAllocator.cpp">
+      <Filter>net\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\http\HttpClientWorker.cpp">
+      <Filter>net\http</Filter>
+    </ClCompile>
+    <ClCompile Include="net\http\HttpServerWorker.cpp">
+      <Filter>net\http</Filter>
+    </ClCompile>
+    <ClCompile Include="work\LogicManager.cpp">
+      <Filter>work</Filter>
+    </ClCompile>
+    <ClCompile Include="config\ProtobufReader.cpp">
+      <Filter>config\pb</Filter>
+    </ClCompile>
+    <ClCompile Include="net\Url.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\ClientWorker.cpp">
+      <Filter>net\tcp\conn</Filter>
+    </ClCompile>
+    <ClCompile Include="net\ServerWorker.cpp">
+      <Filter>net\tcp\conn</Filter>
+    </ClCompile>
+    <ClCompile Include="net\Session.cpp">
+      <Filter>net\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\SessionManager.cpp">
+      <Filter>net\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\CRC32.cpp">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="net\SessionStatistics.cpp">
+      <Filter>net\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\SessionConcreteFactory.cpp">
+      <Filter>net\tcp</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

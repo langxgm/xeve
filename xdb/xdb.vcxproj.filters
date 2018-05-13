@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="mongo">
+      <UniqueIdentifier>{8bedb498-ca62-4c28-96dd-3b3718e46164}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DBClient.h" />
+    <ClInclude Include="mongo\MongoClient.h">
+      <Filter>mongo</Filter>
+    </ClInclude>
+    <ClInclude Include="mongo\MongoAccess.h">
+      <Filter>mongo</Filter>
+    </ClInclude>
+    <ClInclude Include="mongo\MongoExecutor.h">
+      <Filter>mongo</Filter>
+    </ClInclude>
+    <ClInclude Include="DBHandler.h" />
+    <ClInclude Include="DBHandlerManager.h" />
+    <ClInclude Include="mongo\MongoElement.h">
+      <Filter>mongo</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="mongo\MongoClient.cpp">
+      <Filter>mongo</Filter>
+    </ClCompile>
+    <ClCompile Include="mongo\MongoAccess.cpp">
+      <Filter>mongo</Filter>
+    </ClCompile>
+    <ClCompile Include="mongo\MongoExecutor.cpp">
+      <Filter>mongo</Filter>
+    </ClCompile>
+    <ClCompile Include="DBHandlerManager.cpp" />
+  </ItemGroup>
+</Project>

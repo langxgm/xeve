@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Manager.h" />
+    <ClInclude Include="Module.h" />
+    <ClInclude Include="ModuleManager.h" />
+    <ClInclude Include="NonCopyable.h" />
+    <ClInclude Include="Print.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="TimeUtil.h" />
+    <ClInclude Include="LoadAverage.h" />
+    <ClInclude Include="TimeChecker.h" />
+    <ClInclude Include="IOUtil.h" />
+    <ClInclude Include="Defer.h" />
+    <ClInclude Include="Random.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ModuleManager.cpp" />
+    <ClCompile Include="TimeUtil.cpp" />
+    <ClCompile Include="IOUtil.cpp" />
+  </ItemGroup>
+</Project>
