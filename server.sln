@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xdb", "xdb\xdb.vcxproj", "{
 		{E1DAAFD1-2BAA-4F0B-B61C-41DA412B2E4D} = {E1DAAFD1-2BAA-4F0B-B61C-41DA412B2E4D}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xgame", "xgame\xgame.vcxproj", "{E6B22127-5D14-4804-A507-312B7115CEFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,8 +63,19 @@ Global
 		{33AD5648-6035-4716-B4AC-91186F1D3386}.Release|x64.Build.0 = Release|x64
 		{33AD5648-6035-4716-B4AC-91186F1D3386}.Release|x86.ActiveCfg = Release|Win32
 		{33AD5648-6035-4716-B4AC-91186F1D3386}.Release|x86.Build.0 = Release|Win32
+		{E6B22127-5D14-4804-A507-312B7115CEFD}.Debug|x64.ActiveCfg = Debug|x64
+		{E6B22127-5D14-4804-A507-312B7115CEFD}.Debug|x64.Build.0 = Debug|x64
+		{E6B22127-5D14-4804-A507-312B7115CEFD}.Debug|x86.ActiveCfg = Debug|Win32
+		{E6B22127-5D14-4804-A507-312B7115CEFD}.Debug|x86.Build.0 = Debug|Win32
+		{E6B22127-5D14-4804-A507-312B7115CEFD}.Release|x64.ActiveCfg = Release|x64
+		{E6B22127-5D14-4804-A507-312B7115CEFD}.Release|x64.Build.0 = Release|x64
+		{E6B22127-5D14-4804-A507-312B7115CEFD}.Release|x86.ActiveCfg = Release|Win32
+		{E6B22127-5D14-4804-A507-312B7115CEFD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73EEAA48-6F5D-46B0-9AC1-024CFF4B188F}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="object">
+      <UniqueIdentifier>{d61a4bf6-d66b-402f-be7b-70903ed4dbe8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="message">
+      <UniqueIdentifier>{1d4b48a5-46d1-4140-8a82-9e7e1a1a16c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="state">
+      <UniqueIdentifier>{e4aed057-a6ec-4eb4-863b-fa3cac7957db}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="message\Message.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="message\MessageDispatcher.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="message\MessageHandler.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="message\MessageID.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="object\EntityManager.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="object\GameObject.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="object\GameObject_Dynamic.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="object\GameObject_Entity.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="object\GameObject_Static.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="object\GameObjectAttribute.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="object\GameObjectType.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="object\GameType.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="state\State.h">
+      <Filter>state</Filter>
+    </ClInclude>
+    <ClInclude Include="state\StateMachine.h">
+      <Filter>state</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="message\MessageDispatcher.cpp">
+      <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="object\EntityManager.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="object\GameObject_Dynamic.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="object\GameObject_Static.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
