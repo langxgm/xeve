@@ -55,6 +55,21 @@ public:
 	}
 
 	//------------------------------------------------------------------------
+	// 移除注册
+	//------------------------------------------------------------------------
+	virtual bool UnregObject(const key_type& key)
+	{
+		auto it = m_mapObject.find(key);
+		if (it != m_mapObject.end())
+		{
+			delete it->second;
+			m_mapObject.erase(it);
+			return true;
+		}
+		return false;
+	}
+
+	//------------------------------------------------------------------------
 	// 获取对象
 	//------------------------------------------------------------------------
 	virtual value_type GetObject(const key_type& key)
