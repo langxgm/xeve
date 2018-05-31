@@ -141,6 +141,7 @@
     <ClInclude Include="object\GameType.h" />
     <ClInclude Include="state\State.h" />
     <ClInclude Include="state\StateMachine.h" />
+    <ClInclude Include="state\StateManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="message\MessageDispatcher.cpp" />
