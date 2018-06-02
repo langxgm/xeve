@@ -91,3 +91,8 @@ int ClientWorker::Send1(const ::google::protobuf::Message* pMsg)
 {
 	return Send(m_nUniqueSessionID, pMsg);
 }
+
+int ClientWorker::Send1(const void* pMsg, size_t nLen)
+{
+	return Send(m_nUniqueSessionID, pMsg, nLen);
+}

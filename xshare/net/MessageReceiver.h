@@ -12,6 +12,7 @@
 #include "BufferAllocator.h"
 
 #include <vector>
+#include <functional>
 
 namespace evpp {
 	class EventLoop;
@@ -89,6 +90,11 @@ public:
 	evpp::TCPConnPtr GetConnPtr(int64_t nSessionID);
 
 	//------------------------------------------------------------------------
+	// 关闭连接
+	//------------------------------------------------------------------------
+	void CloseConn(int64_t nSessionID);
+
+	//------------------------------------------------------------------------
 	// 获得连接数
 	//------------------------------------------------------------------------
 	uint64_t GetSessionNum();
@@ -109,6 +115,32 @@ public:
 	// 发送消息
 	//------------------------------------------------------------------------
 	int Send(int64_t nSessionID, const ::google::protobuf::Message* pMsg);
+
+	//------------------------------------------------------------------------
+	// 发送消息
+	//------------------------------------------------------------------------
+	int Send(const std::vector<int64_t>& vecSessionID, const ::google::protobuf::Message* pMsg);
+
+	//------------------------------------------------------------------------
+	// 发送消息
+	//------------------------------------------------------------------------
+	int Send(const std::function<int64_t(void)>& funcNext, const ::google::protobuf::Message* pMsg);
+
+	//------------------------------------------------------------------------
+	// 发送给集合
+	//------------------------------------------------------------------------
+	template<class collection_type>
+	int SendTo(const collection_type& coll, const ::google::protobuf::Message* pMsg)
+	{
+		static_assert(std::is_base_of<std::input_iterator_tag, typename collection_type::iterator::iterator_category>::value, "not collection type");
+		auto itBegin = coll.begin(), itEnd = coll.end();
+		return Send([&itBegin, &itEnd]() { return itBegin != itEnd ? *itBegin++ : 0; }, pMsg);
+	}
+
+	//------------------------------------------------------------------------
+	// 发送消息
+	//------------------------------------------------------------------------
+	int Send(int64_t nSessionID, const void* pMsg, size_t nLen);
 
 	//------------------------------------------------------------------------
 	// 发送消息

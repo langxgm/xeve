@@ -208,6 +208,15 @@ evpp::TCPConnPtr MessageReceiver::GetConnPtr(int64_t nSessionID)
 	return nullptr;
 }
 
+void MessageReceiver::CloseConn(int64_t nSessionID)
+{
+	auto conn = GetConnPtr(nSessionID);
+	if (conn)
+	{
+		conn->Close();
+	}
+}
+
 uint64_t MessageReceiver::GetSessionNum()
 {
 	uint64_t nSessionNum = 0;
@@ -250,6 +259,63 @@ int MessageReceiver::Send(int64_t nSessionID, const ::google::protobuf::Message*
 		}
 	}
 	ResetBuffer(pWriteBuffer.get());
+	return -1;
+}
+
+int MessageReceiver::Send(const std::vector<int64_t>& vecSessionID, const ::google::protobuf::Message* pMsg)
+{
+	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
+	WriteBuffer(pWriteBuffer.get(), pMsg);
+	{
+		for (auto& nSessionID : vecSessionID)
+		{
+			auto conn = GetConnPtr(nSessionID);
+			if (conn)
+			{
+				Send(conn, pWriteBuffer->data(), pWriteBuffer->length());
+
+				if (auto pCounter = Counter())
+				{
+					pCounter->OnSend(nSessionID, pMsg);
+				}
+			}
+		}
+	}
+	ResetBuffer(pWriteBuffer.get());
+	return 0;
+}
+
+int MessageReceiver::Send(const std::function<int64_t(void)>& funcNext, const ::google::protobuf::Message* pMsg)
+{
+	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
+	WriteBuffer(pWriteBuffer.get(), pMsg);
+	{
+		while (auto nSessionID = funcNext())
+		{
+			auto conn = GetConnPtr(nSessionID);
+			if (conn)
+			{
+				Send(conn, pWriteBuffer->data(), pWriteBuffer->length());
+
+				if (auto pCounter = Counter())
+				{
+					pCounter->OnSend(nSessionID, pMsg);
+				}
+			}
+		}
+	}
+	ResetBuffer(pWriteBuffer.get());
+	return 0;
+}
+
+int MessageReceiver::Send(int64_t nSessionID, const void* pMsg, size_t nLen)
+{
+	auto conn = GetConnPtr(nSessionID);
+	if (conn)
+	{
+		Send(conn, pMsg, nLen);
+		return 0;
+	}
 	return -1;
 }
 

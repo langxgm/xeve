@@ -63,6 +63,11 @@ public:
 	//------------------------------------------------------------------------
 	int Send1(const ::google::protobuf::Message* pMsg);
 
+	//------------------------------------------------------------------------
+	// 发送消息给唯一的连接
+	//------------------------------------------------------------------------
+	int Send1(const void* pMsg, size_t nLen);
+
 protected:
 	// 事件管理器池
 	std::shared_ptr<evpp::EventLoopThreadPool> m_pLoopPool;
