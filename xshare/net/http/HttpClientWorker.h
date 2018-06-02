@@ -25,6 +25,14 @@ namespace evpp {
 
 typedef std::function<void(const std::shared_ptr<evpp::httpc::Response>&, evpp::EventLoop*)> HttpHandler;
 
+// HTTPS的支持
+#if defined(EVPP_HTTP_CLIENT_SUPPORTS_SSL)
+extern void x_ssl_init_once();
+extern void x_ssl_clean();
+extern void* x_ssl_ctx();
+extern int x_ssl_certificate(const char *CAfile);
+#endif
+
 class HttpClientWorker
 {
 public:
@@ -36,6 +44,9 @@ public:
 	//------------------------------------------------------------------------
 	virtual void Init(evpp::EventLoop* loop,
 		const std::string& host, int port,
+#if defined(EVPP_HTTP_CLIENT_SUPPORTS_SSL)
+		bool enable_ssl,
+#endif
 		uint32_t thread_num,
 		uint32_t max_conn_pool,
 		double timeout = 2.0);
