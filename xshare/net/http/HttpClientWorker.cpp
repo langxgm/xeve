@@ -6,6 +6,32 @@
 #include <evpp/httpc/conn_pool.h>
 #include <evpp/httpc/request.h>
 
+#if defined(EVPP_HTTP_CLIENT_SUPPORTS_SSL)
+#include <evpp/httpc/ssl.h>
+void x_ssl_init_once()
+{
+	static std::once_flag flag;
+	std::call_once(flag, []() {
+		evpp::httpc::InitSSL();
+	});
+}
+
+void x_ssl_clean()
+{
+	evpp::httpc::CleanSSL();
+}
+
+void* x_ssl_ctx()
+{
+	return evpp::httpc::GetSSLCtx();
+}
+
+int x_ssl_certificate(const char *CAfile)
+{
+	return SSL_CTX_load_verify_locations(evpp::httpc::GetSSLCtx(), CAfile, nullptr);
+}
+#endif
+
 HttpClientWorker::HttpClientWorker()
 {
 
@@ -20,13 +46,23 @@ HttpClientWorker::~HttpClientWorker()
 }
 
 void HttpClientWorker::Init(evpp::EventLoop* loop, const std::string& host, int port,
+#if defined(EVPP_HTTP_CLIENT_SUPPORTS_SSL)
+	bool enable_ssl,
+#endif
 	uint32_t thread_num, uint32_t max_conn_pool, double timeout /*= 2.0*/)
 {
 	m_pLoop = loop;
 
 	m_pLoopPool.reset(new evpp::EventLoopThreadPool(loop, thread_num));
 
-	m_pConnPool.reset(new evpp::httpc::ConnPool(host, port, evpp::Duration(timeout), max_conn_pool));
+	m_pConnPool.reset(new evpp::httpc::ConnPool(
+		host,
+		port,
+#if defined(EVPP_HTTP_CLIENT_SUPPORTS_SSL)
+		enable_ssl,
+#endif
+		evpp::Duration(timeout),
+		max_conn_pool));
 }
 
 bool HttpClientWorker::Start()
