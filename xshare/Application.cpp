@@ -72,7 +72,7 @@ bool Application::Init(int argc, char** argv)
 	// 日志级别
 	{
 #ifdef _DEBUG
-		google::LogSeverity lv = google::GLOG_WARNING;
+		google::LogSeverity lv = google::GLOG_INFO;
 		FLAGS_minloglevel = lv;
 		FLAGS_stderrthreshold = lv;
 #endif
