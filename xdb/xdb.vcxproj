@@ -26,12 +26,19 @@
     <ClInclude Include="mongo\MongoAccess.h" />
     <ClInclude Include="mongo\MongoClient.h" />
     <ClInclude Include="mongo\MongoElement.h" />
+    <ClInclude Include="redis\RedisAccess.h" />
+    <ClInclude Include="redis\RedisClient.h" />
+    <ClInclude Include="redis\RedisExecutor.h" />
+    <ClInclude Include="redis\RedisMacro.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DBHandlerManager.cpp" />
     <ClCompile Include="mongo\MongoAccess.cpp" />
     <ClCompile Include="mongo\MongoClient.cpp" />
     <ClCompile Include="mongo\MongoExecutor.cpp" />
+    <ClCompile Include="redis\RedisAccess.cpp" />
+    <ClCompile Include="redis\RedisClient.cpp" />
+    <ClCompile Include="redis\RedisExecutor.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

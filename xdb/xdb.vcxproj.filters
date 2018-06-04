@@ -4,6 +4,9 @@
     <Filter Include="mongo">
       <UniqueIdentifier>{8bedb498-ca62-4c28-96dd-3b3718e46164}</UniqueIdentifier>
     </Filter>
+    <Filter Include="redis">
+      <UniqueIdentifier>{6ee3dc5d-37d8-41fe-ba8a-aae411b96d65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DBClient.h" />
@@ -21,6 +24,18 @@
     <ClInclude Include="mongo\MongoElement.h">
       <Filter>mongo</Filter>
     </ClInclude>
+    <ClInclude Include="redis\RedisAccess.h">
+      <Filter>redis</Filter>
+    </ClInclude>
+    <ClInclude Include="redis\RedisClient.h">
+      <Filter>redis</Filter>
+    </ClInclude>
+    <ClInclude Include="redis\RedisExecutor.h">
+      <Filter>redis</Filter>
+    </ClInclude>
+    <ClInclude Include="redis\RedisMacro.h">
+      <Filter>redis</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mongo\MongoClient.cpp">
@@ -33,5 +48,14 @@
       <Filter>mongo</Filter>
     </ClCompile>
     <ClCompile Include="DBHandlerManager.cpp" />
+    <ClCompile Include="redis\RedisAccess.cpp">
+      <Filter>redis</Filter>
+    </ClCompile>
+    <ClCompile Include="redis\RedisClient.cpp">
+      <Filter>redis</Filter>
+    </ClCompile>
+    <ClCompile Include="redis\RedisExecutor.cpp">
+      <Filter>redis</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

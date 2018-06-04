@@ -18,6 +18,7 @@ message("  CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 # src list
 aux_source_directory(${PROJECT_SOURCE_DIR} SRC_LIST)
 aux_source_directory(${PROJECT_SOURCE_DIR}/mongo SRC_LIST)
+aux_source_directory(${PROJECT_SOURCE_DIR}/redis SRC_LIST)
 include_directories(${PROJECT_SOURCE_DIR}/..)
 include_directories(/usr/local/include/mongocxx/v_noabi)
 include_directories(/usr/local/include/bsoncxx/v_noabi)
