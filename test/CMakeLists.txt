@@ -52,4 +52,4 @@ link_directories(${LIBRARY_OUTPUT_PATH})
 link_directories(${PROJECT_SOURCE_DIR}/../third_party/x64-linux/lib)
 
 add_executable(test ${SRC_LIST} ${UNITTEST_SRC})
-target_link_libraries(test libgo dl xdb xshare xbase protobuf mongocxx bsoncxx evpp_static event glog gflags)
+target_link_libraries(test libgo dl xdb xshare xbase protobuf cpp_redis mongocxx bsoncxx evpp_static event glog gflags)

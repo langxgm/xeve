@@ -19,6 +19,9 @@
     <ClCompile Include="json_test.cpp">
       <Filter>encoding</Filter>
     </ClCompile>
+    <ClCompile Include="redis_test.cpp">
+      <Filter>xdb</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="work">

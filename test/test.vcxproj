@@ -24,6 +24,7 @@
     <ClCompile Include="json_test.cpp" />
     <ClCompile Include="libgo_test.cpp" />
     <ClCompile Include="mongo_test.cpp" />
+    <ClCompile Include="redis_test.cpp" />
     <ClCompile Include="TestApp.cpp" />
     <ClCompile Include="work_test.cpp" />
     <ClCompile Include="xbase_test.cpp" />
