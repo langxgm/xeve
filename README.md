@@ -10,6 +10,7 @@
 5. [protobuf]
 6. [mongo-cxx-driver] (optional)
 7. [libgo] (optional)
+8. [cpp_redis] (optional)
 
 ## 编译工具:
 ### linux平台:
@@ -18,7 +19,7 @@
 3. CMake
 ###  windows平台:
 1. VS2017
-2. 使用vcpkg安装evpp,glog,gflags,gtest,protobuf,mongo-cxx-driver,libgo
+2. 使用vcpkg安装evpp,glog,gflags,gtest,protobuf,mongo-cxx-driver,libgo,cpp_redis
 
 [xeve]:https://github.com/xgm-skywave/xeve
 [evpp]:https://github.com/Qihoo360/evpp
@@ -28,3 +29,4 @@
 [protobuf]:https://github.com/google/protobuf
 [mongo-cxx-driver]:https://github.com/mongodb/mongo-cxx-driver
 [libgo]:https://github.com/yyzybb537/libgo
+[cpp_redis]:https://github.com/Cylix/cpp_redis
