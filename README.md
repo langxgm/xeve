@@ -18,10 +18,12 @@
 2. GNU Make
 3. CMake
 ###  windows平台:
-1. VS2017
-2. 使用vcpkg安装evpp,glog,gflags,gtest,protobuf,mongo-cxx-driver,libgo,cpp_redis
+1. [Visual Studio 2017]
+2. 使用[vcpkg]安装`evpp`,`glog`,`gflags`,`gtest`,`protobuf`,`mongo-cxx-driver`,`libgo`,`cpp_redis`
 
 [xeve]:https://github.com/xgm-skywave/xeve
+[Visual Studio 2017]:https://www.visualstudio.com
+[vcpkg]:https://github.com/Microsoft/vcpkg
 [evpp]:https://github.com/Qihoo360/evpp
 [glog]:https://github.com/google/glog
 [gflags]:https://github.com/gflags/gflags
