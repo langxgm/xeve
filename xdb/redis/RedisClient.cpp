@@ -33,6 +33,7 @@ bool RedisClient::Start()
 
 bool RedisClient::Stop()
 {
+	RedisAccess::Me()->Disconnect();
 	return true;
 }
 

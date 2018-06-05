@@ -77,6 +77,16 @@ bool RedisAccess::Connect()
 	return m_pClient->is_connected();
 }
 
+void RedisAccess::Disconnect()
+{
+	m_pClient->cancel_reconnect();
+
+	if (m_pClient->is_connected())
+	{
+		m_pClient->disconnect(true);
+	}
+}
+
 cpp_redis::client* RedisAccess::GetAccessor()
 {
 	return m_pClient.get();
