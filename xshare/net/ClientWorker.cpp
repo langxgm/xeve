@@ -29,16 +29,20 @@ ClientWorker::~ClientWorker()
 void ClientWorker::Init(evpp::EventLoop* loop, const std::string& remote_addr,
 	const std::string& name, uint32_t thread_num, uint32_t session_num)
 {
+	// addr,addr,...
+	std::vector<std::string> vecAddr;
+	evpp::StringSplit(remote_addr, ",", 0, vecAddr);
+
 	// 预计连接数/50,对连接分片管理
-	MessageReceiver::Init(loop, session_num / 50);
+	MessageReceiver::Init(loop, vecAddr.size() / 50);
 
 	m_pLoopPool.reset(new evpp::EventLoopThreadPool(loop, thread_num));
 	m_pLoopPool->Start(true);
 
-	for (uint32_t i = 0; i < session_num; ++i)
+	for (uint32_t i = 0; i < vecAddr.size(); ++i)
 	{
 		std::string strConnName = name + "." + std::to_string(i);
-		evpp::TCPClient* pClient = new evpp::TCPClient(m_pLoopPool->GetNextLoop(), remote_addr, strConnName);
+		evpp::TCPClient* pClient = new evpp::TCPClient(m_pLoopPool->GetNextLoop(), vecAddr[i], strConnName);
 		pClient->SetConnectionCallback(std::bind(&ClientWorker::OnConnectionEx, this, std::placeholders::_1));
 		pClient->SetMessageCallback(std::bind(&MessageReceiver::OnMessage, this, std::placeholders::_1, std::placeholders::_2));
 		pClient->set_auto_reconnect(true);
