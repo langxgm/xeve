@@ -15,6 +15,17 @@ MessageMeta* MessagePacker::NewMeta()
 
 void MessagePacker::Pack(MessageReceiver* pOwner, evpp::Buffer* pBuf, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta /*= nullptr*/)
 {
+	// 消息ID
+	uint32_t nMsgID = Crc32(pMsg->GetTypeName().c_str());
+	if (pMeta)
+	{
+		const_cast<MessageMeta*>(pMeta)->SetMsgID(nMsgID);
+	}
+
+	// 打包前
+	PackBefore(nMsgID, pMsg, pMeta);
+
+	// 打包中
 	MessageHeader aHeader;
 	aHeader.nMsgLen = pMsg->ByteSizeLong();
 	aHeader.nMetaLen = pMeta ? pMeta->GetByteSize() : 4; // 4:消息ID
@@ -25,16 +36,12 @@ void MessagePacker::Pack(MessageReceiver* pOwner, evpp::Buffer* pBuf, const ::go
 		pBuf->EnsureWritableBytes(aHeader.nTotalLen - pBuf->WritableBytes());
 	}
 
-	// 消息ID
-	uint32_t nMsgID = Crc32(pMsg->GetTypeName().c_str());
-	if (pMeta)
-	{
-		const_cast<MessageMeta*>(pMeta)->SetMsgID(nMsgID);
-	}
-
 	PackHeader(pOwner, pBuf, &aHeader);
 	PackMeta(pOwner, pBuf, nMsgID, pMeta);
 	PackBody(pOwner, pBuf, pMsg, &aHeader);
+
+	// 打包后
+	PackAfter(nMsgID, pMsg, pMeta);
 }
 
 void MessagePacker::PackBytes(MessageReceiver* pOwner, evpp::Buffer* pBuf, const void* pMsg, size_t nMsgLen, const MessageMeta* pMeta /*= nullptr*/)

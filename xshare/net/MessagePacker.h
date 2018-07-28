@@ -51,6 +51,16 @@ public:
 
 protected:
 	//------------------------------------------------------------------------
+	// 打包前
+	//------------------------------------------------------------------------
+	virtual void PackBefore(uint32_t nMsgID, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta) {}
+
+	//------------------------------------------------------------------------
+	// 打包后
+	//------------------------------------------------------------------------
+	virtual void PackAfter(uint32_t nMsgID, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta) {}
+
+	//------------------------------------------------------------------------
 	// 打包消息头
 	//------------------------------------------------------------------------
 	virtual void PackHeader(MessageReceiver* pOwner, evpp::Buffer* pBuf, MessageHeader* pHeader);
