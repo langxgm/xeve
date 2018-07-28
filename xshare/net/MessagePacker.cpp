@@ -157,27 +157,14 @@ void MessagePacker::PackMeta(MessageReceiver* pOwner, evpp::Buffer* pBuf, uint32
 	// 消息ID
 	pBuf->AppendInt32(nMsgID);
 
-	// 请求/回应元数据
+	// 写入元数据自定义内容
 	if (pMeta)
 	{
-		// 写入请求元数据
-		if (auto pReq = const_cast<MessageMeta*>(pMeta)->GetReq())
+		if (auto pUserdata = const_cast<MessageMeta*>(pMeta)->GetUserdata())
 		{
-			if (auto nByteSize = pReq->ByteSizeLong())
+			if (auto nByteSize = pUserdata->ByteSizeLong())
 			{
-				if (pReq->SerializeToArray(pBuf->WriteBegin(), pBuf->WritableBytes()))
-				{
-					pBuf->WriteBytes(nByteSize);
-				}
-			}
-		}
-
-		// 写入回应元数据
-		if (auto pResp = const_cast<MessageMeta*>(pMeta)->GetResp())
-		{
-			if (auto nByteSize = pResp->ByteSizeLong())
-			{
-				if (pResp->SerializeToArray(pBuf->WriteBegin(), pBuf->WritableBytes()))
+				if (pUserdata->SerializeToArray(pBuf->WriteBegin(), pBuf->WritableBytes()))
 				{
 					pBuf->WriteBytes(nByteSize);
 				}
@@ -198,34 +185,20 @@ bool MessagePacker::UnpackMeta(MessageReceiver* pOwner, evpp::Buffer* pBuf, cons
 	// 消息ID
 	pMeta->SetMsgID(pBuf->ReadInt32());
 
-	// 请求/回应元数据
+	// 读取元数据自定义内容
 	evpp::Slice s = pBuf->Next(pHeader->nMetaLen - pMeta->GetBaseByteSize());
 	if (s.size() > 0)
 	{
-		// 读取请求元数据
-		if (auto pReq = pMeta->GetReq())
+		if (auto pUserdata = pMeta->GetUserdata())
 		{
-			if (pReq->ParseFromArray(s.data(), s.size()) == false)
+			if (pUserdata->ParseFromArray(s.data(), s.size()) == false)
 			{
-				LOG_ERROR << "Failed req.parse() msgID=" << pMeta->GetMsgID()
-					<< " reqMsgName=" << pReq->GetTypeName();
+				LOG_ERROR << "Failed metadata.parse() msgID=" << pMeta->GetMsgID()
+					<< " userdataName=" << pUserdata->GetTypeName();
 				return false;
 			}
 			// 移除已读
-			s.remove_prefix(pReq->ByteSizeLong());
-		}
-
-		// 读取回应元数据
-		if (auto pResp = pMeta->GetResp())
-		{
-			if (pResp->ParseFromArray(s.data(), s.size()) == false)
-			{
-				LOG_ERROR << "Failed resp.parse() msgID=" << pMeta->GetMsgID()
-					<< " respMsgName=" << pResp->GetTypeName();
-				return false;
-			}
-			// 移除已读
-			s.remove_prefix(pResp->ByteSizeLong());
+			s.remove_prefix(pUserdata->ByteSizeLong());
 		}
 	}
 
