@@ -7,6 +7,8 @@
 #include "SessionFactory.h"
 #include "MessagePacker.h"
 
+#include "xbase/TimeUtil.h"
+
 #include <evpp/buffer.h>
 #include <evpp/tcp_conn.h>
 
@@ -51,11 +53,14 @@ void MessageReceiver::OnConnection(const evpp::TCPConnPtr& conn)
 	{
 		conn->SetTCPNoDelay(true);
 
+		int64_t nNow = TimeUtil::GetCurrentTimeMillis();
+
 		auto& pSMgr = GetSessionMgrPtr(conn->id());
 		std::lock_guard<std::recursive_mutex> guard(pSMgr->GetLock());
 
 		SessionPtr pSession(m_pSessionFactory->NewSession(conn)/*new Session(conn)*/);
 		pSession->SetConnected(true);
+		pSession->SetConnectedTime(nNow);
 		pSession->SetStat(SessionStatPtr(m_pSessionFactory->NewSessionStatistics()/*new SessionStatistics()*/));
 
 		pSMgr->Add(conn->id(), pSession);
@@ -94,16 +99,19 @@ void MessageReceiver::CacheMessage(MessagePacket& aMsgPacket, int64_t nSessionID
 
 void MessageReceiver::Update()
 {
+	int64_t nNow = TimeUtil::GetCurrentTimeMillis();
+
 	// 搜集所有的消息和断开的连接
 	std::list<MessagePacket> aMsgList;
 	std::list<uint64_t> aDisconnectList;
+	std::list<uint64_t> aCloseConnList;
 	// 扫描
 	{
 		std::list<MessagePacket> aList;
 		for (auto& pSMgr : m_vecSessions)
 		{
 			std::lock_guard<std::recursive_mutex> guard(pSMgr->GetLock());
-			pSMgr->Visit([this, &aList, &aMsgList, &aDisconnectList](const SessionPtrMap& mapSession) {
+			pSMgr->Visit([&](const SessionPtrMap& mapSession) {
 				for (auto& it : mapSession)
 				{
 					const SessionPtr& pSession = it.second;
@@ -113,6 +121,15 @@ void MessageReceiver::Update()
 					if (!pSession->Connected())
 					{
 						aDisconnectList.push_back(pSession->GetID());
+					}
+					// 长时间没认证直接关闭
+					if (m_nAuthTimeout != 0 && pSession->IsAuth() == false)
+					{
+						if (nNow - pSession->GetConnectedTime() > m_nAuthTimeout)
+						{
+							pSession->SetConnectedTime(nNow); // 一帧内没关掉,下个周期再关
+							aCloseConnList.push_back(pSession->GetID());
+						}
 					}
 				}
 			});
@@ -150,6 +167,14 @@ void MessageReceiver::Update()
 		std::lock_guard<std::recursive_mutex> guard(pSMgr->GetLock());
 		pSMgr->Remove(nSessionID);
 	}
+	// 长时间没认证直接关闭
+	for (auto& nSessionID : aCloseConnList)
+	{
+		auto conn = GetConnPtr(nSessionID);
+		LOG(INFO) << "Auth timeout sessionid=" << nSessionID
+			<< " addr=" << (conn ? conn->AddrToString() : "nullptr");
+		CloseConn(nSessionID);
+	}
 }
 
 evpp::TCPConnPtr MessageReceiver::GetConnPtr(int64_t nSessionID)
@@ -183,6 +208,18 @@ uint64_t MessageReceiver::GetSessionNum()
 		nSessionNum += pSMgr->Size();
 	}
 	return nSessionNum;
+}
+
+void MessageReceiver::SetAuth(int64_t nSessionID, bool isPass)
+{
+	auto& pSMgr = GetSessionMgrPtr(nSessionID);
+	std::lock_guard<std::recursive_mutex> guard(pSMgr->GetLock());
+
+	const SessionPtr& pSession = pSMgr->Get(nSessionID);
+	if (pSession)
+	{
+		pSession->SetAuth(isPass);
+	}
 }
 
 uint32_t MessageReceiver::GetSectionIndex(int64_t nSessionID)

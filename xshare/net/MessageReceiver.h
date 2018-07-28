@@ -111,6 +111,11 @@ public:
 	//------------------------------------------------------------------------
 	uint64_t GetSessionNum();
 
+	//------------------------------------------------------------------------
+	// 设置认证标记
+	//------------------------------------------------------------------------
+	void SetAuth(int64_t nSessionID, bool isPass);
+
 private:
 	//------------------------------------------------------------------------
 	// 获取分段下标
@@ -207,6 +212,7 @@ public:
 	uint32_t& MaxBufLen() { return m_nMaxBufLen; }
 	uint32_t& MaxMessageLen() { return m_nMaxMessageLen; }
 	uint32_t& MaxDealPerFrame() { return m_nMaxDealPerFrame; }
+	int64_t& AuthTimeout() { return m_nAuthTimeout; }
 
 protected:
 	// 事件管理器
@@ -230,6 +236,8 @@ protected:
 	uint32_t m_nMaxMessageLen = 65535;
 	// 每个连接,每帧处理的消息数量
 	uint32_t m_nMaxDealPerFrame = 100;
+	// 连接认证超时时间(单位:毫秒,0:不会超时)
+	int64_t m_nAuthTimeout = 0;
 
 	// 发送缓冲区分配器,避免每次new
 	BufferAllocator m_aWriteBufferAllocator = { 1 };
