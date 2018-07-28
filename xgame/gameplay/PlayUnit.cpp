@@ -65,6 +65,11 @@ bool PlayUnit::IsObserver(int64_t nPlayerGUID)
 	return m_Observers.IsExistPlayer(nPlayerGUID);
 }
 
+bool PlayUnit::IsExistPlayer(int64_t nPlayerGUID)
+{
+	return IsFighter(nPlayerGUID) || IsObserver(nPlayerGUID);
+}
+
 GamePlayerPtr PlayUnit::GetFighter(int64_t nPlayerGUID)
 {
 	return m_Fighters.GetPlayer(nPlayerGUID);
