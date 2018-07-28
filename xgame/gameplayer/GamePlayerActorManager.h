@@ -46,4 +46,9 @@ public:
 		return mybase_manager::GetObject(key);
 	}
 
+	template<class T>
+	T* GetActor_cast(const key_type& key)
+	{
+		return static_cast<T*>(GetActor(key));
+	}
 };
