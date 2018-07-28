@@ -196,10 +196,24 @@ public:
 	virtual std::set<int64_t> GetAllSessionID_set(int64_t nExcludeGUID = 0);
 
 public:
+	//------------------------------------------------------------------------
+	// 创建
+	//------------------------------------------------------------------------
+	virtual void OnCreate(int64_t nPlayerGUID);
+
+	//------------------------------------------------------------------------
+	// 销毁
+	//------------------------------------------------------------------------
+	virtual void OnDestroy();
+
+public:
 	int64_t GetSN() const { return m_nSN; }
 	void SetSN(int64_t nSN) { m_nSN = nSN; }
 
 	GamePlay* GetGamePlay() const { return m_pGamePlay; }
+
+	bool IsAlive() const { return m_bAlive; }
+	void SetAlive(bool bAlive) { m_bAlive = bAlive; }
 
 	uint32_t GetMinFighterNum() const { return m_nMinFighterNum; }
 	void SetMinFighterNum(uint32_t nMinFighterNum) { m_nMinFighterNum = nMinFighterNum; }
@@ -227,6 +241,9 @@ protected:
 
 	// 游戏玩法
 	GamePlay* m_pGamePlay = nullptr;
+
+	// 存活状态
+	bool m_bAlive = false;
 
 	// 战斗人员列表
 	GamePlayerVector<int64_t, GamePlayerPtr> m_Fighters;

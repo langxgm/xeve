@@ -13,6 +13,7 @@ GamePlay::~GamePlay()
 {
 	m_pActorManager.reset();
 	m_pPlayerFactory.reset();
+	m_listAlivePlayUnit.clear();
 	m_mapPlayUnit.clear();
 }
 
@@ -42,9 +43,18 @@ void GamePlay::Init(const std::string& strName, uint32_t nLimit)
 
 void GamePlay::Update()
 {
-	for (auto&it : m_mapPlayUnit)
+	for (auto it = m_listAlivePlayUnit.begin(); it != m_listAlivePlayUnit.end();)
 	{
-		it.second->Update();
+		auto& pPlayUnit = *it;
+		if (pPlayUnit->IsAlive())
+		{
+			pPlayUnit->Update();
+			++it;
+		}
+		else
+		{
+			it = m_listAlivePlayUnit.erase(it);
+		}
 	}
 }
 
@@ -68,7 +78,12 @@ PlayUnitPtr GamePlay::AddUnit(int64_t nSN /*= 0*/)
 	//pPlayUnit->Init();
 
 	auto ret = m_mapPlayUnit.insert(std::make_pair(nSN, pPlayUnit));
-	return ret.second ? pPlayUnit : nullptr;
+	if (ret.second)
+	{
+		m_listAlivePlayUnit.push_back(pPlayUnit);
+		return pPlayUnit;
+	}
+	return nullptr;
 }
 
 bool GamePlay::DelUnit(int64_t nSN)

@@ -9,6 +9,7 @@
 #pragma once
 
 #include <map>
+#include <list>
 #include <string>
 #include <memory>
 
@@ -116,6 +117,9 @@ protected:
 
 	// 单元映射表 <唯一ID, 单元>
 	std::map<int64_t, PlayUnitPtr> m_mapPlayUnit;
+
+	// 存活的单元列表
+	std::list<PlayUnitPtr> m_listAlivePlayUnit;
 
 	// 数量限制
 	uint32_t m_nLimit = 0;

@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClCompile Include="gameplay\GamePlay.cpp" />
     <ClCompile Include="gameplay\PlayUnit.cpp" />
+    <ClCompile Include="gameplay\PlayUnitEvent.cpp" />
     <ClCompile Include="message\MessageDispatcher.cpp" />
     <ClCompile Include="object\EntityManager.cpp" />
     <ClCompile Include="object\GameObject_Dynamic.cpp" />

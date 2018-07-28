@@ -107,5 +107,8 @@
     <ClCompile Include="gameplay\GamePlay.cpp">
       <Filter>gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="gameplay\PlayUnitEvent.cpp">
+      <Filter>gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
