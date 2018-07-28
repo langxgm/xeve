@@ -8,14 +8,14 @@
 //------------------------------------------------------------------------
 #pragma once
 
+#include "GamePlayer.h"
+
 #include <set>
 #include <map>
 #include <vector>
 #include <memory>
 #include <stdint.h>
 #include <assert.h>
-
-#include "GamePlayer.h"
 
 class GamePlayer;
 typedef std::shared_ptr<GamePlayer> GamePlayerPtr;
