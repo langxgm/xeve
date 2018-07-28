@@ -197,10 +197,10 @@ const SessionMgrPtr& MessageReceiver::GetSessionMgrPtr(int64_t nSessionID)
 	return m_vecSessions[nIndex];
 }
 
-int MessageReceiver::Send(int64_t nSessionID, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
+int MessageReceiver::Send(int64_t nSessionID, const ::google::protobuf::Message* pMsg, const MessageMeta& rMeta)
 {
 	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
-	WriteBuffer(pWriteBuffer.get(), pMsg, pMeta);
+	WriteBuffer(pWriteBuffer.get(), pMsg, &rMeta);
 	{
 		auto conn = GetConnPtr(nSessionID);
 		if (conn)
@@ -219,10 +219,10 @@ int MessageReceiver::Send(int64_t nSessionID, const ::google::protobuf::Message*
 	return -1;
 }
 
-int MessageReceiver::Send(const std::vector<int64_t>& vecSessionID, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
+int MessageReceiver::Send(const std::vector<int64_t>& vecSessionID, const ::google::protobuf::Message* pMsg, const MessageMeta& rMeta)
 {
 	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
-	WriteBuffer(pWriteBuffer.get(), pMsg, pMeta);
+	WriteBuffer(pWriteBuffer.get(), pMsg, &rMeta);
 	{
 		for (auto& nSessionID : vecSessionID)
 		{
@@ -242,10 +242,10 @@ int MessageReceiver::Send(const std::vector<int64_t>& vecSessionID, const ::goog
 	return 0;
 }
 
-int MessageReceiver::Send(const std::function<int64_t(void)>& funcNext, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
+int MessageReceiver::Send(const std::function<int64_t(void)>& funcNext, const ::google::protobuf::Message* pMsg, const MessageMeta& rMeta)
 {
 	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
-	WriteBuffer(pWriteBuffer.get(), pMsg, pMeta);
+	WriteBuffer(pWriteBuffer.get(), pMsg, &rMeta);
 	{
 		while (auto nSessionID = funcNext())
 		{
@@ -294,10 +294,10 @@ int MessageReceiver::Send(const std::vector<int64_t>& vecSessionID, const void* 
 	return 0;
 }
 
-void MessageReceiver::SendToAll(const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
+void MessageReceiver::SendToAll(const ::google::protobuf::Message* pMsg, const MessageMeta& rMeta)
 {
 	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
-	WriteBuffer(pWriteBuffer.get(), pMsg, pMeta);
+	WriteBuffer(pWriteBuffer.get(), pMsg, &rMeta);
 	{
 		std::list<evpp::TCPConnPtr> vecConn;
 		// 获得所有连接

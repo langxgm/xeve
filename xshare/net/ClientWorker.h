@@ -61,7 +61,7 @@ public:
 	//------------------------------------------------------------------------
 	// 发送消息给唯一的连接
 	//------------------------------------------------------------------------
-	int Send1(const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta);
+	int Send1(const ::google::protobuf::Message* pMsg, const MessageMeta& rMeta = MessageMeta());
 
 	//------------------------------------------------------------------------
 	// 发送消息给唯一的连接
