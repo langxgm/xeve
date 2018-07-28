@@ -116,6 +116,8 @@ public:
 	GamePlayerMapping() {}
 	virtual ~GamePlayerMapping() {}
 
+	using mybase::GetPlayerLimit;
+
 	//------------------------------------------------------------------------
 	// 增加玩家
 	//------------------------------------------------------------------------
@@ -278,6 +280,8 @@ public:
 public:
 	GamePlayerVector() {}
 	virtual ~GamePlayerVector() {}
+
+	using mybase::GetPlayerLimit;
 
 	//------------------------------------------------------------------------
 	// 增加玩家
