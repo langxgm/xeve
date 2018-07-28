@@ -42,14 +42,30 @@ bool PlayUnit::DelFighter(int64_t nPlayerGUID)
 	return m_Fighters.DelPlayer(nPlayerGUID);
 }
 
+void PlayUnit::RemoveAllFighter()
+{
+	m_Fighters.RemoveAllPlayer();
+}
+
 bool PlayUnit::DelObserver(int64_t nPlayerGUID)
 {
 	return m_Observers.DelPlayer(nPlayerGUID);
 }
 
+void PlayUnit::RemoveAllObserver()
+{
+	m_Observers.RemoveAllPlayer();
+}
+
 bool PlayUnit::DelPlayer(int64_t nPlayerGUID)
 {
 	return DelFighter(nPlayerGUID) || DelObserver(nPlayerGUID);
+}
+
+void PlayUnit::RemoveAllPlayer()
+{
+	RemoveAllFighter();
+	RemoveAllObserver();
 }
 
 bool PlayUnit::IsFighter(int64_t nPlayerGUID)
