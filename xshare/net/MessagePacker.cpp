@@ -33,7 +33,7 @@ void MessagePacker::Pack(MessageReceiver* pOwner, evpp::Buffer* pBuf, const ::go
 
 	if (aHeader.nTotalLen > pBuf->WritableBytes())
 	{
-		pBuf->EnsureWritableBytes(aHeader.nTotalLen - pBuf->WritableBytes());
+		pBuf->EnsureWritableBytes(aHeader.nTotalLen);
 	}
 
 	PackHeader(pOwner, pBuf, &aHeader);
@@ -53,7 +53,7 @@ void MessagePacker::PackBytes(MessageReceiver* pOwner, evpp::Buffer* pBuf, const
 
 	if (aHeader.nTotalLen > pBuf->WritableBytes())
 	{
-		pBuf->EnsureWritableBytes(aHeader.nTotalLen - pBuf->WritableBytes());
+		pBuf->EnsureWritableBytes(aHeader.nTotalLen);
 	}
 
 	PackHeader(pOwner, pBuf, &aHeader);
