@@ -21,6 +21,11 @@ GamePlayerActorManager* GamePlay::CreateActorManager()
 	return new GamePlayerActorManager();
 }
 
+uint64_t GamePlay::GenSerialNumber()
+{
+	return ++m_nGenSerialNumber;
+}
+
 void GamePlay::Init(const std::string& strName, uint32_t nLimit)
 {
 	m_strName = strName;
@@ -52,10 +57,12 @@ PlayUnitPtr GamePlay::AddUnit(int64_t nSN /*= 0*/)
 
 	if (nSN == 0)
 	{
-		nSN = ++m_nGenSerialNumber;
+		nSN = GenSerialNumber();
 	}
 
 	PlayUnitPtr pPlayUnit(CreateUnit());
+
+	pPlayUnit->SetSN(nSN);
 
 	// 子类去做Init
 	//pPlayUnit->Init();

@@ -192,6 +192,9 @@ public:
 
 public:
 	int64_t GetSN() const { return m_nSN; }
+	void SetSN(int64_t nSN) { m_nSN = nSN; }
+
+	GamePlay* GetGamePlay() const { return m_pGamePlay; }
 
 	uint32_t GetMinFighterNum() const { return m_nMinFighterNum; }
 	void SetMinFighterNum(uint32_t nMinFighterNum) { m_nMinFighterNum = nMinFighterNum; }
