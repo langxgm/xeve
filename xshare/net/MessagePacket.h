@@ -28,10 +28,34 @@ class MessageMeta
 {
 public:
 	virtual ~MessageMeta() {}
-	virtual uint32_t GetByteSize() const { return sizeof(m_nMsgID); }
+
+	//------------------------------------------------------------------------
+	// 元数据基类长度
+	//------------------------------------------------------------------------
 	virtual uint32_t GetBaseByteSize() const final { return sizeof(m_nMsgID); }
+
+	//------------------------------------------------------------------------
+	// 元数据总长度
+	//------------------------------------------------------------------------
+	virtual uint32_t GetByteSize() const { return sizeof(m_nMsgID); }
+
+public:
+	//------------------------------------------------------------------------
+	// 获得请求消息
+	//------------------------------------------------------------------------
+	virtual ::google::protobuf::Message* GetReq() { return nullptr; }
+
+	//------------------------------------------------------------------------
+	// 获得回应消息
+	//------------------------------------------------------------------------
+	virtual ::google::protobuf::Message* GetResp() { return nullptr; }
+
+	//------------------------------------------------------------------------
+	// 一般为PlayerGUID
+	//------------------------------------------------------------------------
 	virtual int64_t GetGUID() { return 0; }
 	virtual void SetGUID(int64_t nGUID) {}
+
 public:
 	uint32_t GetMsgID() const { return m_nMsgID; }
 	void SetMsgID(uint32_t nMsgID) { m_nMsgID = nMsgID; }

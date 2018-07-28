@@ -149,6 +149,34 @@ void MessagePacker::PackMeta(MessageReceiver* pOwner, evpp::Buffer* pBuf, uint32
 {
 	// 消息ID
 	pBuf->AppendInt32(nMsgID);
+
+	// 请求/回应元数据
+	if (pMeta)
+	{
+		// 写入请求元数据
+		if (auto pReq = const_cast<MessageMeta*>(pMeta)->GetReq())
+		{
+			if (auto nByteSize = pReq->ByteSizeLong())
+			{
+				if (pReq->SerializeToArray(pBuf->WriteBegin(), pBuf->WritableBytes()))
+				{
+					pBuf->WriteBytes(nByteSize);
+				}
+			}
+		}
+
+		// 写入回应元数据
+		if (auto pResp = const_cast<MessageMeta*>(pMeta)->GetResp())
+		{
+			if (auto nByteSize = pResp->ByteSizeLong())
+			{
+				if (pResp->SerializeToArray(pBuf->WriteBegin(), pBuf->WritableBytes()))
+				{
+					pBuf->WriteBytes(nByteSize);
+				}
+			}
+		}
+	}
 }
 
 bool MessagePacker::UnpackMeta(MessageReceiver* pOwner, evpp::Buffer* pBuf, const MessageHeader* pHeader, MessageMetaPtr& pMeta)
@@ -160,7 +188,40 @@ bool MessagePacker::UnpackMeta(MessageReceiver* pOwner, evpp::Buffer* pBuf, cons
 		return false;
 	}
 
+	// 消息ID
 	pMeta->SetMsgID(pBuf->ReadInt32());
+
+	// 请求/回应元数据
+	evpp::Slice s = pBuf->Next(pHeader->nMetaLen - pMeta->GetBaseByteSize());
+	if (s.size() > 0)
+	{
+		// 读取请求元数据
+		if (auto pReq = pMeta->GetReq())
+		{
+			if (pReq->ParseFromArray(s.data(), s.size()) == false)
+			{
+				LOG_ERROR << "Failed req.parse() msgID=" << pMeta->GetMsgID()
+					<< " reqMsgName=" << pReq->GetTypeName();
+				return false;
+			}
+			// 移除已读
+			s.remove_prefix(pReq->ByteSizeLong());
+		}
+
+		// 读取回应元数据
+		if (auto pResp = pMeta->GetResp())
+		{
+			if (pResp->ParseFromArray(s.data(), s.size()) == false)
+			{
+				LOG_ERROR << "Failed resp.parse() msgID=" << pMeta->GetMsgID()
+					<< " respMsgName=" << pResp->GetTypeName();
+				return false;
+			}
+			// 移除已读
+			s.remove_prefix(pResp->ByteSizeLong());
+		}
+	}
+
 	return true;
 }
 
@@ -197,8 +258,8 @@ bool MessagePacker::UnpackBody(MessageReceiver* pOwner, int64_t nSessionID, evpp
 		}
 		else
 		{
-			LOG_ERROR << "Failed msg.parse() MsgID=" << nMsgID
-				<< " MsgName=" << pMsg->GetTypeName();
+			LOG_ERROR << "Failed msg.parse() msgID=" << nMsgID
+				<< " msgName=" << pMsg->GetTypeName();
 		}
 	}
 	else
