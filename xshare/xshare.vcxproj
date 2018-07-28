@@ -160,6 +160,7 @@
     <ClInclude Include="net\ClientWorker.h" />
     <ClInclude Include="net\CRC32.h" />
     <ClInclude Include="net\BufferAllocator.h" />
+    <ClInclude Include="net\GenSN.h" />
     <ClInclude Include="net\http\HttpCallback.h" />
     <ClInclude Include="net\http\HttpClientWorker.h" />
     <ClInclude Include="net\http\HttpServerWorker.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="net\BufferAllocator.cpp" />
     <ClCompile Include="net\ClientWorker.cpp" />
     <ClCompile Include="net\CRC32.cpp" />
+    <ClCompile Include="net\GenSN.cpp" />
     <ClCompile Include="net\http\HttpClientWorker.cpp" />
     <ClCompile Include="net\http\HttpServerWorker.cpp" />
     <ClCompile Include="net\MessageFactory.cpp" />

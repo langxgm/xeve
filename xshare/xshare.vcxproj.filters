@@ -125,6 +125,9 @@
     <ClInclude Include="net\MessagePacker.h">
       <Filter>net\tcp</Filter>
     </ClInclude>
+    <ClInclude Include="net\GenSN.h">
+      <Filter>net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -185,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="net\MessagePacker.cpp">
       <Filter>net\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\GenSN.cpp">
+      <Filter>net</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
