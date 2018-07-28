@@ -27,7 +27,10 @@ void MessagePacker::Pack(MessageReceiver* pOwner, evpp::Buffer* pBuf, const ::go
 
 	// 消息ID
 	uint32_t nMsgID = Crc32(pMsg->GetTypeName().c_str());
-	const_cast<MessageMeta*>(pMeta)->SetMsgID(nMsgID);
+	if (pMeta)
+	{
+		const_cast<MessageMeta*>(pMeta)->SetMsgID(nMsgID);
+	}
 
 	PackHeader(pOwner, pBuf, &aHeader);
 	PackMeta(pOwner, pBuf, nMsgID, pMeta);
@@ -153,7 +156,7 @@ bool MessagePacker::UnpackMeta(MessageReceiver* pOwner, evpp::Buffer* pBuf, cons
 	if (pHeader->nMetaLen < pMeta->GetByteSize())
 	{
 		LOG_ERROR << "Failed metaLen=" << pHeader->nMetaLen
-			<< " msgIDByteSize=" << pMeta->GetByteSize();
+			<< " metaByteSize=" << pMeta->GetByteSize();
 		return false;
 	}
 

@@ -29,7 +29,7 @@ class MessageMeta
 public:
 	virtual ~MessageMeta() {}
 	virtual uint32_t GetByteSize() const { return sizeof(m_nMsgID); }
-	virtual uint32_t GetMsgIDByteSize() const { return sizeof(m_nMsgID); }
+	virtual uint32_t GetBaseByteSize() const final { return sizeof(m_nMsgID); }
 	virtual int64_t GetGUID() { return 0; }
 	virtual void SetGUID(int64_t nGUID) {}
 public:
