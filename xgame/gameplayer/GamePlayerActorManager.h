@@ -8,9 +8,9 @@
 //------------------------------------------------------------------------
 #pragma once
 
-#include "xbase/Manager.h"
+#include "GamePlayerActor.h"
 
-class GamePlayerActor;
+#include "xbase/Manager.h"
 
 class GamePlayerActorManager : protected Manager<int32_t, GamePlayerActor*>
 {
@@ -45,4 +45,5 @@ public:
 	{
 		return mybase_manager::GetObject(key);
 	}
+
 };
