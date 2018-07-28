@@ -127,6 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="gameplayer\GamePlayer.h" />
+    <ClInclude Include="gameplayer\GamePlayerActor.h" />
+    <ClInclude Include="gameplayer\GamePlayerActorManager.h" />
+    <ClInclude Include="gameplayer\GamePlayerCollection.h" />
+    <ClInclude Include="gameplayer\GamePlayerFactory.h" />
+    <ClInclude Include="gameplay\GamePlay.h" />
+    <ClInclude Include="gameplay\PlaySystem.h" />
+    <ClInclude Include="gameplay\PlayUnit.h" />
     <ClInclude Include="message\Message.h" />
     <ClInclude Include="message\MessageDispatcher.h" />
     <ClInclude Include="message\MessageHandler.h" />
@@ -144,6 +152,8 @@
     <ClInclude Include="state\StateManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="gameplay\GamePlay.cpp" />
+    <ClCompile Include="gameplay\PlayUnit.cpp" />
     <ClCompile Include="message\MessageDispatcher.cpp" />
     <ClCompile Include="object\EntityManager.cpp" />
     <ClCompile Include="object\GameObject_Dynamic.cpp" />

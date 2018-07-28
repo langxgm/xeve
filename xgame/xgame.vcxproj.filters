@@ -10,6 +10,12 @@
     <Filter Include="state">
       <UniqueIdentifier>{e4aed057-a6ec-4eb4-863b-fa3cac7957db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gameplay">
+      <UniqueIdentifier>{f0f52d5f-364b-4572-8d2e-3b63272dddba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameplayer">
+      <UniqueIdentifier>{33c95c4e-b87d-44f6-b33f-b1e38a567f6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="message\Message.h">
@@ -57,6 +63,30 @@
     <ClInclude Include="state\StateManager.h">
       <Filter>state</Filter>
     </ClInclude>
+    <ClInclude Include="gameplay\GamePlay.h">
+      <Filter>gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplay\PlayUnit.h">
+      <Filter>gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplay\PlaySystem.h">
+      <Filter>gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplayer\GamePlayer.h">
+      <Filter>gameplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplayer\GamePlayerActor.h">
+      <Filter>gameplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplayer\GamePlayerActorManager.h">
+      <Filter>gameplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplayer\GamePlayerCollection.h">
+      <Filter>gameplayer</Filter>
+    </ClInclude>
+    <ClInclude Include="gameplayer\GamePlayerFactory.h">
+      <Filter>gameplayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="message\MessageDispatcher.cpp">
@@ -70,6 +100,12 @@
     </ClCompile>
     <ClCompile Include="object\GameObject_Static.cpp">
       <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="gameplay\PlayUnit.cpp">
+      <Filter>gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="gameplay\GamePlay.cpp">
+      <Filter>gameplay</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
