@@ -35,5 +35,5 @@ public:
 	::google::protobuf::Message* NewMessage(uint32_t nMsgID);
 
 private:
-	std::map<int32_t, const ::google::protobuf::Message*> m_mapFactory;
+	std::map<uint32_t, const ::google::protobuf::Message*> m_mapFactory;
 };
