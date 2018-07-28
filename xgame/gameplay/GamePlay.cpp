@@ -67,8 +67,8 @@ PlayUnitPtr GamePlay::AddUnit(int64_t nSN /*= 0*/)
 	// 子类去做Init
 	//pPlayUnit->Init();
 
-	m_mapPlayUnit.insert(std::make_pair(nSN, pPlayUnit));
-	return pPlayUnit;
+	auto ret = m_mapPlayUnit.insert(std::make_pair(nSN, pPlayUnit));
+	return ret.second ? pPlayUnit : nullptr;
 }
 
 bool GamePlay::DelUnit(int64_t nSN)
