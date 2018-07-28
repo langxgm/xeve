@@ -2,8 +2,6 @@
 #include "PlayUnit.h"
 #include "xgame/gameplayer/GamePlayer.h"
 
-#include "xbase/TimeUtil.h"
-
 PlayUnit::PlayUnit()
 {
 
@@ -22,7 +20,6 @@ void PlayUnit::Init(int64_t nSN, GamePlay* pGamePlay, uint32_t nMinFighterNum, u
 	m_Fighters.Init(nMaxFighterNum);
 	m_Observers.Init(nMaxObserverNum);
 	m_nMinFighterNum = nMinFighterNum;
-	m_nCreateTime = TimeUtil::GetCurrentTimeMillis();
 }
 
 void PlayUnit::Update()
