@@ -92,6 +92,11 @@ public:
 	virtual void OnMissMessage(uint32_t nMsgID, const void* pMsg, size_t nLen, int64_t nSessionID, const MessageMetaPtr& pMeta) {}
 
 	//------------------------------------------------------------------------
+	// 转发buffer
+	//------------------------------------------------------------------------
+	virtual void OnTransfer(uint32_t nMsgID, const void* pBuf, size_t nLen, int64_t nSessionID, const MessageMetaPtr& pMeta) {}
+
+	//------------------------------------------------------------------------
 	// 获得连接
 	//------------------------------------------------------------------------
 	evpp::TCPConnPtr GetConnPtr(int64_t nSessionID);
