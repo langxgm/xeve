@@ -8,15 +8,12 @@
 //------------------------------------------------------------------------
 #pragma once
 
-#include "xgame/state/StateMachine.h"
 #include "xgame/gameplayer/GamePlayerCollection.h"
 
 #include <set>
 #include <vector>
 #include <memory>
 #include <stdint.h>
-
-//typedef std::unique_ptr<> GamePlayStateMachinePtr;
 
 class GamePlay;
 
