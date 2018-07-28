@@ -63,7 +63,7 @@ bool MultiProtobufReader::Read(const char* pBuffer, uint32_t nLength)
 					nested_start = strstr(nested_end, "{");
 					nested_end = strstr(nested_end, "}");
 					end = nested_end;
-				} while (nested_start && nested_start < nested_end);
+				} while (nested_start && nested_start < nested_end && ++nested_end);
 			}
 
 			if (end)
