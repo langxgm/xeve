@@ -34,7 +34,7 @@ void MessageHandleManager::UnRegister(uint32_t nMsgID)
 	m_mapHandle.erase(nMsgID);
 }
 
-int MessageHandleManager::HandleMessage(uint32_t nMsgID, const MessagePtr& pMsg, int64_t nSessionID)
+int MessageHandleManager::HandleMessage(uint32_t nMsgID, const MessagePtr& pMsg, int64_t nSessionID, const MessageMetaPtr& pMeta)
 {
 	uint32_t nCount = 0;
 	auto itFind = m_mapHandle.find(nMsgID);
@@ -43,7 +43,7 @@ int MessageHandleManager::HandleMessage(uint32_t nMsgID, const MessagePtr& pMsg,
 		std::list<MessageHandleFunc>* pList = itFind->second;
 		for (auto& it : *pList)
 		{
-			(it)(pMsg, nSessionID);
+			(it)(pMsg, nSessionID, pMeta);
 			++nCount;
 		}
 	}

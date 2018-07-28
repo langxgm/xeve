@@ -167,6 +167,7 @@
     <ClInclude Include="net\MessageFactory.h" />
     <ClInclude Include="net\MessageHandleManager.h" />
     <ClInclude Include="net\MessagePacket.h" />
+    <ClInclude Include="net\MessagePacker.h" />
     <ClInclude Include="net\MessagePtr.h" />
     <ClInclude Include="net\MessageRegistry.h" />
     <ClInclude Include="net\ServerWorker.h" />
@@ -195,6 +196,7 @@
     <ClCompile Include="net\http\HttpServerWorker.cpp" />
     <ClCompile Include="net\MessageFactory.cpp" />
     <ClCompile Include="net\MessageHandleManager.cpp" />
+    <ClCompile Include="net\MessagePacker.cpp" />
     <ClCompile Include="net\MessageRegistry.cpp" />
     <ClCompile Include="net\ServerWorker.cpp" />
     <ClCompile Include="net\MessageReceiver.cpp" />

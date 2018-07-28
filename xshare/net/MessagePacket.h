@@ -10,10 +10,41 @@
 
 #include "MessagePtr.h"
 
+// 消息包头
+struct MessageHeader
+{
+	uint32_t nTotalLen = 0; // 总长度
+	uint32_t nMetaLen = 0; // 元数据长度
+	uint32_t nMsgLen = 0; // 消息内容长度
+
+	static constexpr uint32_t GetHeaderByteSize()
+	{
+		return sizeof(nTotalLen) + sizeof(nMetaLen); // 消息包头占用的网络字节数
+	}
+};
+
+// 消息元数据
+class MessageMeta
+{
+public:
+	virtual ~MessageMeta() {}
+	virtual uint32_t GetByteSize() const { return sizeof(m_nMsgID); }
+	virtual uint32_t GetMsgIDByteSize() const { return sizeof(m_nMsgID); }
+	virtual int64_t GetGUID() { return 0; }
+	virtual void SetGUID(int64_t nGUID) {}
+public:
+	uint32_t GetMsgID() const { return m_nMsgID; }
+	void SetMsgID(uint32_t nMsgID) { m_nMsgID = nMsgID; }
+protected:
+	uint32_t m_nMsgID = 0; // 消息ID
+};
+typedef std::shared_ptr<MessageMeta> MessageMetaPtr;
+
 // 消息包
 struct MessagePacket
 {
-	uint32_t nMsgID = 0; // 消息ID
 	uint64_t nSessionID = 0; // 会话ID
-	MessagePtr pMsg; // 消息
+	MessageMetaPtr pMeta; // 元数据
+	uint32_t nMsgID = 0; // 消息ID
+	MessagePtr pMsg; // 消息内容
 };

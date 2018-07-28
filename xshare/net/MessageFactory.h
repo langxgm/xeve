@@ -32,7 +32,7 @@ public:
 	//------------------------------------------------------------------------
 	// 创建消息
 	//------------------------------------------------------------------------
-	::google::protobuf::Message* NewMessage(uint32_t nMsgID);
+	::google::protobuf::Message* NewMessage(uint32_t nMsgID) const;
 
 private:
 	std::map<uint32_t, const ::google::protobuf::Message*> m_mapFactory;

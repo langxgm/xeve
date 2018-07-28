@@ -27,6 +27,8 @@ class SessionManager;
 typedef std::shared_ptr<SessionManager> SessionMgrPtr;
 class SessionFactory;
 typedef std::unique_ptr<SessionFactory> SessionFactoryPtr;
+class MessagePacker;
+typedef std::unique_ptr<MessagePacker> MessagePackerPtr;
 
 class MessageReceiver : public MessageRegistry
 {
@@ -43,6 +45,11 @@ public:
 	// 创建连接的工厂
 	//------------------------------------------------------------------------
 	virtual SessionFactory* CreateSessionFactory() = 0;
+
+	//------------------------------------------------------------------------
+	// 创建消息包装器
+	//------------------------------------------------------------------------
+	virtual MessagePacker* CreateMessagePacker();
 
 	//------------------------------------------------------------------------
 	// 启动
@@ -114,27 +121,27 @@ public:
 	//------------------------------------------------------------------------
 	// 发送消息
 	//------------------------------------------------------------------------
-	int Send(int64_t nSessionID, const ::google::protobuf::Message* pMsg);
+	int Send(int64_t nSessionID, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta);
 
 	//------------------------------------------------------------------------
 	// 发送消息
 	//------------------------------------------------------------------------
-	int Send(const std::vector<int64_t>& vecSessionID, const ::google::protobuf::Message* pMsg);
+	int Send(const std::vector<int64_t>& vecSessionID, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta);
 
 	//------------------------------------------------------------------------
 	// 发送消息
 	//------------------------------------------------------------------------
-	int Send(const std::function<int64_t(void)>& funcNext, const ::google::protobuf::Message* pMsg);
+	int Send(const std::function<int64_t(void)>& funcNext, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta);
 
 	//------------------------------------------------------------------------
 	// 发送给集合
 	//------------------------------------------------------------------------
 	template<class collection_type>
-	int SendTo(const collection_type& coll, const ::google::protobuf::Message* pMsg)
+	int SendTo(const collection_type& coll, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
 	{
 		static_assert(std::is_base_of<std::input_iterator_tag, typename collection_type::iterator::iterator_category>::value, "not collection type");
 		auto itBegin = coll.begin(), itEnd = coll.end();
-		return Send([&itBegin, &itEnd]() { return itBegin != itEnd ? *itBegin++ : 0; }, pMsg);
+		return Send([&itBegin, &itEnd]() { return itBegin != itEnd ? *itBegin++ : 0; }, pMsg, pMeta);
 	}
 
 	//------------------------------------------------------------------------
@@ -150,18 +157,23 @@ public:
 	//------------------------------------------------------------------------
 	// 发送给所有连接
 	//------------------------------------------------------------------------
-	void SendToAll(const ::google::protobuf::Message* pMsg);
+	void SendToAll(const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta);
 
 	//------------------------------------------------------------------------
 	// 消息统计接口
 	//------------------------------------------------------------------------
 	virtual MessageCounter* Counter() { return nullptr; }
 
-protected:
+public:
+	//------------------------------------------------------------------------
+	// 获得发送缓冲区分配器
+	//------------------------------------------------------------------------
+	BufferAllocator& GetBufferAllocator() { return m_aWriteBufferAllocator; }
+
 	//------------------------------------------------------------------------
 	// 消息写入buffer
 	//------------------------------------------------------------------------
-	void WriteBuffer(evpp::Buffer* pWriteBuffer, const ::google::protobuf::Message* pMsg);
+	void WriteBuffer(evpp::Buffer* pWriteBuffer, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta);
 
 	//------------------------------------------------------------------------
 	// 重置buffer
@@ -176,6 +188,7 @@ public:
 
 public:
 	evpp::EventLoop* GetEventLoop() { return m_pLoop; }
+	const MessagePackerPtr& GetMessagePacker() { return m_pMessagePacker; }
 	uint32_t& MaxBufLen() { return m_nMaxBufLen; }
 	uint32_t& MaxMessageLen() { return m_nMaxMessageLen; }
 	uint32_t& MaxDealPerFrame() { return m_nMaxDealPerFrame; }
@@ -187,6 +200,9 @@ protected:
 	// 创建连接的工厂
 	SessionFactoryPtr m_pSessionFactory;
 
+	// 消息包装器
+	MessagePackerPtr m_pMessagePacker;
+
 	// 分段的连接集合
 	std::vector<SessionMgrPtr> m_vecSessions;
 	// 段数
@@ -195,12 +211,8 @@ protected:
 	// 消息buff长度限制,超出就被关闭连接(默认限制20MB)
 	uint32_t m_nMaxBufLen = 1048576 * 20;
 
-	// 消息长度占用的字节数
-	uint32_t m_nHeaderLen = 4;
 	// 消息长度限制,超出就被关闭连接
 	uint32_t m_nMaxMessageLen = 65535;
-	// 消息ID长度占用的字节数
-	uint32_t m_nMsgIDLen = 4;
 	// 每个连接,每帧处理的消息数量
 	uint32_t m_nMaxDealPerFrame = 100;
 

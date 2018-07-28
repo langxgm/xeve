@@ -122,6 +122,9 @@
     <ClInclude Include="net\SessionFactory.h">
       <Filter>net\tcp</Filter>
     </ClInclude>
+    <ClInclude Include="net\MessagePacker.h">
+      <Filter>net\tcp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -178,6 +181,9 @@
       <Filter>net\tcp</Filter>
     </ClCompile>
     <ClCompile Include="net\SessionConcreteFactory.cpp">
+      <Filter>net\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="net\MessagePacker.cpp">
       <Filter>net\tcp</Filter>
     </ClCompile>
   </ItemGroup>

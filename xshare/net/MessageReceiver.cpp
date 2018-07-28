@@ -1,16 +1,14 @@
 ﻿
 #include "MessageReceiver.h"
 #include "MessageCounter.h"
-#include "CRC32.h"
 #include "Session.h"
 #include "SessionManager.h"
 #include "SessionStatistics.h"
 #include "SessionFactory.h"
+#include "MessagePacker.h"
 
 #include <evpp/buffer.h>
 #include <evpp/tcp_conn.h>
-
-#include <google/protobuf/message.h>
 
 MessageReceiver::MessageReceiver()
 {
@@ -19,6 +17,7 @@ MessageReceiver::MessageReceiver()
 MessageReceiver::~MessageReceiver()
 {
 	m_vecSessions.clear();
+	m_pMessagePacker.reset();
 	m_pSessionFactory.reset();
 }
 
@@ -27,8 +26,9 @@ void MessageReceiver::Init(evpp::EventLoop* pLoop, uint32_t nSectionNum)
 	m_pLoop = pLoop;
 
 	m_pSessionFactory.reset(CreateSessionFactory());
+	m_pMessagePacker.reset(CreateMessagePacker());
 
-	nSectionNum = std::max(nSectionNum, (uint32_t)1);
+	nSectionNum = (std::max)(nSectionNum, (uint32_t)1);
 	m_vecSessions.reserve(nSectionNum);
 	for (uint32_t i = 0; i < nSectionNum; ++i)
 	{
@@ -37,6 +37,11 @@ void MessageReceiver::Init(evpp::EventLoop* pLoop, uint32_t nSectionNum)
 	m_nSectionNum = nSectionNum;
 
 	RegisterListen();
+}
+
+MessagePacker* MessageReceiver::CreateMessagePacker()
+{
+	return new MessagePacker();
 }
 
 void MessageReceiver::OnConnection(const evpp::TCPConnPtr& conn)
@@ -72,55 +77,7 @@ void MessageReceiver::OnConnection(const evpp::TCPConnPtr& conn)
 
 void MessageReceiver::OnMessage(const evpp::TCPConnPtr& conn, evpp::Buffer* pBuf)
 {
-	// 读取消息
-	while (pBuf->size() >= m_nHeaderLen)
-	{
-		// 消息包长度
-		const uint32_t nLen = pBuf->PeekInt32();
-		if (nLen > m_nMaxMessageLen || nLen < m_nHeaderLen + m_nMsgIDLen
-			|| pBuf->size() > m_nMaxBufLen)
-		{
-			LOG_ERROR << "Invalid length=" << nLen
-				<< " bufsize=" << pBuf->size()
-				<< " addr=" << conn->AddrToString();
-			conn->Close();
-			break;
-		}
-
-		if (pBuf->size() >= nLen)
-		{
-			pBuf->Skip(m_nHeaderLen);
-
-			uint32_t nMsgID = pBuf->ReadInt32();
-			evpp::Slice s = pBuf->Next(nLen - m_nHeaderLen - m_nMsgIDLen);
-
-			MessagePtr pMsg(m_aMessageFactory.NewMessage(nMsgID));
-			if (pMsg)
-			{
-				if (pMsg->ParseFromArray(s.data(), s.size()))
-				{
-					MessagePacket aMsgPacket;
-					aMsgPacket.nMsgID = nMsgID;
-					aMsgPacket.nSessionID = conn->id();
-					aMsgPacket.pMsg = std::move(pMsg);
-					CacheMessage(aMsgPacket, conn->id());
-				}
-				else
-				{
-					LOG_ERROR << "Failed msg.parse() MsgID=" << nMsgID
-						<< " MsgName=" << pMsg->GetTypeName();
-				}
-			}
-			else
-			{
-				OnMissMessage(nMsgID, s.data(), s.size(), conn->id());
-			}
-		}
-		else
-		{
-			break;
-		}
-	}
+	m_pMessagePacker->Unpack(this, conn, pBuf);
 }
 
 void MessageReceiver::CacheMessage(MessagePacket& aMsgPacket, int64_t nSessionID)
@@ -173,7 +130,7 @@ void MessageReceiver::Update()
 			pCounter->OnRecv(rMsg.nSessionID, rMsg.pMsg.get());
 		}
 
-		uint32_t nCount = m_aHandleManager.HandleMessage(rMsg.nMsgID, rMsg.pMsg, rMsg.nSessionID);
+		uint32_t nCount = m_aHandleManager.HandleMessage(rMsg.nMsgID, rMsg.pMsg, rMsg.nSessionID, rMsg.pMeta);
 		assert(nCount);
 		if (nCount > 0)
 		{
@@ -240,10 +197,10 @@ const SessionMgrPtr& MessageReceiver::GetSessionMgrPtr(int64_t nSessionID)
 	return m_vecSessions[nIndex];
 }
 
-int MessageReceiver::Send(int64_t nSessionID, const ::google::protobuf::Message* pMsg)
+int MessageReceiver::Send(int64_t nSessionID, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
 {
 	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
-	WriteBuffer(pWriteBuffer.get(), pMsg);
+	WriteBuffer(pWriteBuffer.get(), pMsg, pMeta);
 	{
 		auto conn = GetConnPtr(nSessionID);
 		if (conn)
@@ -262,10 +219,10 @@ int MessageReceiver::Send(int64_t nSessionID, const ::google::protobuf::Message*
 	return -1;
 }
 
-int MessageReceiver::Send(const std::vector<int64_t>& vecSessionID, const ::google::protobuf::Message* pMsg)
+int MessageReceiver::Send(const std::vector<int64_t>& vecSessionID, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
 {
 	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
-	WriteBuffer(pWriteBuffer.get(), pMsg);
+	WriteBuffer(pWriteBuffer.get(), pMsg, pMeta);
 	{
 		for (auto& nSessionID : vecSessionID)
 		{
@@ -285,10 +242,10 @@ int MessageReceiver::Send(const std::vector<int64_t>& vecSessionID, const ::goog
 	return 0;
 }
 
-int MessageReceiver::Send(const std::function<int64_t(void)>& funcNext, const ::google::protobuf::Message* pMsg)
+int MessageReceiver::Send(const std::function<int64_t(void)>& funcNext, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
 {
 	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
-	WriteBuffer(pWriteBuffer.get(), pMsg);
+	WriteBuffer(pWriteBuffer.get(), pMsg, pMeta);
 	{
 		while (auto nSessionID = funcNext())
 		{
@@ -324,10 +281,10 @@ void MessageReceiver::Send(const evpp::TCPConnPtr& conn, const void* pMsg, size_
 	conn->Send(pMsg, nLen);
 }
 
-void MessageReceiver::SendToAll(const ::google::protobuf::Message* pMsg)
+void MessageReceiver::SendToAll(const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
 {
 	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
-	WriteBuffer(pWriteBuffer.get(), pMsg);
+	WriteBuffer(pWriteBuffer.get(), pMsg, pMeta);
 	{
 		std::list<evpp::TCPConnPtr> vecConn;
 		// 获得所有连接
@@ -355,23 +312,9 @@ void MessageReceiver::SendToAll(const ::google::protobuf::Message* pMsg)
 	}
 }
 
-void MessageReceiver::WriteBuffer(evpp::Buffer* pWriteBuffer, const ::google::protobuf::Message* pMsg)
+void MessageReceiver::WriteBuffer(evpp::Buffer* pWriteBuffer, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
 {
-	// 消息ID
-	uint32_t nMsgID = Crc32(pMsg->GetTypeName().c_str());
-	// 消息内容长度
-	size_t nSize = pMsg->ByteSizeLong();
-	// 消息包长度
-	pWriteBuffer->AppendInt32(m_nHeaderLen + m_nMsgIDLen + nSize);
-	pWriteBuffer->AppendInt32(nMsgID);
-	if (nSize > pWriteBuffer->WritableBytes())
-	{
-		pWriteBuffer->EnsureWritableBytes(nSize);
-	}
-
-	// 消息内容
-	pMsg->SerializeToArray((void*)pWriteBuffer->WriteBegin(), pWriteBuffer->WritableBytes());
-	pWriteBuffer->WriteBytes(nSize);
+	m_pMessagePacker->Pack(this, pWriteBuffer, pMsg, pMeta);
 }
 
 void MessageReceiver::ResetBuffer(evpp::Buffer* pWriteBuffer)

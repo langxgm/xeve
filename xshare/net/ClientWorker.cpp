@@ -91,9 +91,9 @@ void ClientWorker::OnConnectionEx(const evpp::TCPConnPtr& conn)
 	}
 }
 
-int ClientWorker::Send1(const ::google::protobuf::Message* pMsg)
+int ClientWorker::Send1(const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
 {
-	return Send(m_nUniqueSessionID, pMsg);
+	return Send(m_nUniqueSessionID, pMsg, pMeta);
 }
 
 int ClientWorker::Send1(const void* pMsg, size_t nLen)

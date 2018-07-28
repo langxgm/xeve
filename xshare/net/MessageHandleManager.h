@@ -20,7 +20,7 @@
 // pMsg:消息
 // nSessionID:会话ID
 //------------------------------------------------------------------------
-typedef std::function<void(const MessagePtr& pMsg, int64_t nSessionID)> MessageHandleFunc;
+typedef std::function<void(const MessagePtr& pMsg, int64_t nSessionID, const MessageMetaPtr& pMeta)> MessageHandleFunc;
 
 class MessageHandleManager
 {
@@ -41,7 +41,7 @@ public:
 	//------------------------------------------------------------------------
 	// 处理消息
 	//------------------------------------------------------------------------
-	int HandleMessage(uint32_t nMsgID, const MessagePtr& pMsg, int64_t nSessionID);
+	int HandleMessage(uint32_t nMsgID, const MessagePtr& pMsg, int64_t nSessionID, const MessageMetaPtr& pMeta);
 
 private:
 	// 消息监听列表

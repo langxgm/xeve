@@ -14,7 +14,7 @@ void MessageFactory::UnRegister(uint32_t nMsgID)
 	m_mapFactory.erase(nMsgID);
 }
 
-google::protobuf::Message* MessageFactory::NewMessage(uint32_t nMsgID)
+google::protobuf::Message* MessageFactory::NewMessage(uint32_t nMsgID) const
 {
 	auto itFind = m_mapFactory.find(nMsgID);
 	if (itFind != m_mapFactory.end())

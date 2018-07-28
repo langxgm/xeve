@@ -31,6 +31,10 @@ public:
 	void RegisterMessage(const MessageHandleFunc& handle,
 		const ::google::protobuf::Message* pFactory);
 
+public:
+	const MessageFactory& GetMessageFactory() { return m_aMessageFactory; }
+	const MessageHandleManager& GetHandleManager() { return m_aHandleManager; }
+
 protected:
 	// 消息工厂
 	MessageFactory m_aMessageFactory;
@@ -43,7 +47,7 @@ protected:
 //------------------------------------------------------------------------
 #ifndef REG_MSG
 #define REG_MSG(func, owner, factory, tips) \
-	RegisterMessage(std::bind(func, owner, std::placeholders::_1, std::placeholders::_2),\
+	RegisterMessage(std::bind(func, owner, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),\
 		factory::internal_default_instance())
 #endif
 
@@ -52,6 +56,6 @@ protected:
 //------------------------------------------------------------------------
 #ifndef REG_MSG_TO
 #define REG_MSG_TO(registry, func, owner, factory, tips) \
-	registry->RegisterMessage(std::bind(func, owner, std::placeholders::_1, std::placeholders::_2),\
+	registry->RegisterMessage(std::bind(func, owner, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),\
 		factory::internal_default_instance())
 #endif
