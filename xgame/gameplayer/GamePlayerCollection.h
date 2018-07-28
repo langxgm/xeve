@@ -203,7 +203,7 @@ public:
 	virtual std::vector<int64_t> GetAllPlayerGUID(int64_t nExcludeGUID = 0) override
 	{
 		std::vector<int64_t> vecGUID;
-		int32_t nCapacity = (nExcludeGUID != 0 ? m_mapPlayers.size() : m_mapPlayers.size() - 1);
+		int32_t nCapacity = (nExcludeGUID == 0 ? m_mapPlayers.size() : m_mapPlayers.size() - 1);
 		if (nCapacity > 0)
 		{
 			vecGUID.reserve(nCapacity);
@@ -225,7 +225,7 @@ public:
 	virtual std::vector<int64_t> GetAllSessionID(int64_t nExcludeGUID = 0) override
 	{
 		std::vector<int64_t> vecSessionID;
-		int32_t nCapacity = (nExcludeGUID != 0 ? m_mapPlayers.size() : m_mapPlayers.size() - 1);
+		int32_t nCapacity = (nExcludeGUID == 0 ? m_mapPlayers.size() : m_mapPlayers.size() - 1);
 		if (nCapacity > 0)
 		{
 			vecSessionID.reserve(nCapacity);
@@ -374,7 +374,7 @@ public:
 	virtual std::vector<int64_t> GetAllPlayerGUID(int64_t nExcludeGUID = 0) override
 	{
 		std::vector<int64_t> vecGUID;
-		int32_t nCapacity = (nExcludeGUID != 0 ? m_vecPlayers.size() : m_vecPlayers.size() - 1);
+		int32_t nCapacity = (nExcludeGUID == 0 ? m_vecPlayers.size() : m_vecPlayers.size() - 1);
 		if (nCapacity > 0)
 		{
 			vecGUID.reserve(nCapacity);
@@ -396,7 +396,7 @@ public:
 	{
 		std::vector<int64_t> vecGUID;
 		int32_t nCapacity = m_vecPlayers.size() + rOther.m_vecPlayers.size();
-		nCapacity += (nExcludeGUID != 0 ? 0 : -1);
+		nCapacity += (nExcludeGUID == 0 ? 0 : -1);
 		if (nCapacity > 0)
 		{
 			vecGUID.reserve(nCapacity);
@@ -424,7 +424,7 @@ public:
 	virtual std::vector<int64_t> GetAllSessionID(int64_t nExcludeGUID = 0) override
 	{
 		std::vector<int64_t> vecSessionID;
-		int32_t nCapacity = (nExcludeGUID != 0 ? m_vecPlayers.size() : m_vecPlayers.size() - 1);
+		int32_t nCapacity = (nExcludeGUID == 0 ? m_vecPlayers.size() : m_vecPlayers.size() - 1);
 		if (nCapacity > 0)
 		{
 			vecSessionID.reserve(nCapacity);
@@ -446,7 +446,7 @@ public:
 	{
 		std::vector<int64_t> vecSessionID;
 		int32_t nCapacity = m_vecPlayers.size() + rOther.m_vecPlayers.size();
-		nCapacity += (nExcludeGUID != 0 ? 0 : -1);
+		nCapacity += (nExcludeGUID == 0 ? 0 : -1);
 		if (nCapacity > 0)
 		{
 			vecSessionID.reserve(nCapacity);
