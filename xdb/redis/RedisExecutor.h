@@ -14,6 +14,8 @@
 
 #include <cpp_redis/cpp_redis>
 
+#include <mutex>
+
 #ifdef ERROR
 #undef ERROR // 跟glog冲突
 #endif
@@ -22,12 +24,16 @@ class RedisExecutor
 {
 public:
 	RedisExecutor();
+	explicit RedisExecutor(bool bUnique);
 	virtual ~RedisExecutor();
 public:
 	//------------------------------------------------------------------------
 	// 使用访问者
 	//------------------------------------------------------------------------
 	cpp_redis::client* operator->();
+
+protected:
+	std::unique_lock<std::mutex> m_UniqueLock;
 };
 
 #endif
