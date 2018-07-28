@@ -281,6 +281,19 @@ void MessageReceiver::Send(const evpp::TCPConnPtr& conn, const void* pMsg, size_
 	conn->Send(pMsg, nLen);
 }
 
+int MessageReceiver::Send(const std::vector<int64_t>& vecSessionID, const void* pMsg, size_t nLen)
+{
+	for (auto& nSessionID : vecSessionID)
+	{
+		auto conn = GetConnPtr(nSessionID);
+		if (conn)
+		{
+			Send(conn, pMsg, nLen);
+		}
+	}
+	return 0;
+}
+
 void MessageReceiver::SendToAll(const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
 {
 	auto pWriteBuffer = m_aWriteBufferAllocator.Alloc();
@@ -315,6 +328,11 @@ void MessageReceiver::SendToAll(const ::google::protobuf::Message* pMsg, const M
 void MessageReceiver::WriteBuffer(evpp::Buffer* pWriteBuffer, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta)
 {
 	m_pMessagePacker->Pack(this, pWriteBuffer, pMsg, pMeta);
+}
+
+void MessageReceiver::WriteBuffer(evpp::Buffer* pWriteBuffer, const void* pMsg, size_t nMsgLen, const MessageMeta* pMeta)
+{
+	m_pMessagePacker->PackBytes(this, pWriteBuffer, pMsg, nMsgLen, pMeta);
 }
 
 void MessageReceiver::ResetBuffer(evpp::Buffer* pWriteBuffer)

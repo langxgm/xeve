@@ -200,7 +200,7 @@ bool MessagePacker::UnpackBody(MessageReceiver* pOwner, int64_t nSessionID, evpp
 	}
 	else
 	{
-		pOwner->OnMissMessage(nMsgID, s.data(), s.size(), nSessionID);
+		pOwner->OnMissMessage(nMsgID, s.data(), s.size(), nSessionID, pMeta);
 	}
 
 	return true;

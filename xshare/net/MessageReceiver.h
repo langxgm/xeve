@@ -89,7 +89,7 @@ public:
 	//------------------------------------------------------------------------
 	// 处理未注册的消息(异步的)
 	//------------------------------------------------------------------------
-	virtual void OnMissMessage(uint32_t nMsgID, const void* pMsg, size_t nLen, int64_t nSessionID) {}
+	virtual void OnMissMessage(uint32_t nMsgID, const void* pMsg, size_t nLen, int64_t nSessionID, const MessageMetaPtr& pMeta) {}
 
 	//------------------------------------------------------------------------
 	// 获得连接
@@ -152,6 +152,11 @@ public:
 	//------------------------------------------------------------------------
 	// 发送消息
 	//------------------------------------------------------------------------
+	int Send(const std::vector<int64_t>& vecSessionID, const void* pMsg, size_t nLen);
+
+	//------------------------------------------------------------------------
+	// 发送消息
+	//------------------------------------------------------------------------
 	void Send(const evpp::TCPConnPtr& conn, const void* pMsg, size_t nLen);
 
 	//------------------------------------------------------------------------
@@ -174,6 +179,11 @@ public:
 	// 消息写入buffer
 	//------------------------------------------------------------------------
 	void WriteBuffer(evpp::Buffer* pWriteBuffer, const ::google::protobuf::Message* pMsg, const MessageMeta* pMeta);
+
+	//------------------------------------------------------------------------
+	// 消息写入buffer
+	//------------------------------------------------------------------------
+	void WriteBuffer(evpp::Buffer* pWriteBuffer, const void* pMsg, size_t nMsgLen, const MessageMeta* pMeta);
 
 	//------------------------------------------------------------------------
 	// 重置buffer
