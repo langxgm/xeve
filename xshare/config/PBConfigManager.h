@@ -28,6 +28,8 @@ public:
 	typedef Manager<std::string, const google::protobuf::Message*> mybase_manager;
 	typedef typename mybase_manager::key_type key_type;
 	typedef typename mybase_manager::value_type value_type;
+	template<class T> using rm_const_ptr_t = typename std::remove_pointer<typename std::remove_const<T>::type>::type;
+	template<class T> using add_const_ptr_t = typename std::add_pointer<typename std::add_const<rm_const_ptr_t<T>>::type>::type;
 protected:
 	friend class Singleton<PBConfigManager>;
 	PBConfigManager() {}
@@ -63,16 +65,20 @@ public:
 	// 获取配置
 	//------------------------------------------------------------------------
 	template<class _Key_t, class _Value_t>
-	typename ProtobufMap<_Key_t, const typename std::remove_pointer<_Value_t>::type*>::value_ptr_type At(const _Key_t& key)
+	typename ProtobufMap<_Key_t, add_const_ptr_t<_Value_t>>::value_ptr_type At(const _Key_t& key)
 	{
 		static_assert(std::is_pointer<_Value_t>::value, "value non pointer type");
-		using pbmap_type = ProtobufMap<_Key_t, const typename std::remove_pointer<_Value_t>::type*>;
+		using pbmap_type = ProtobufMap<_Key_t, add_const_ptr_t<_Value_t>>;
 
 		auto name = typeid(pbmap_type).hash_code();
 		auto it = m_mapObject.find(name);
 		if (it != m_mapObject.end())
 		{
+#ifdef _DEBUG
 			auto rs = dynamic_cast<pbmap_type*>(it->second);
+#else
+			auto rs = static_cast<pbmap_type*>(it->second);
+#endif
 			if (rs)
 			{
 				return rs->Find(key);
@@ -85,16 +91,20 @@ public:
 	// 获取ProtobufMap<K,V>对象的指针
 	//------------------------------------------------------------------------
 	template<class _Key_t, class _Value_t>
-	ProtobufMap<_Key_t, const typename std::remove_pointer<_Value_t>::type*>* ObjectPtr()
+	ProtobufMap<_Key_t, add_const_ptr_t<_Value_t>>* ObjectPtr()
 	{
 		static_assert(std::is_pointer<_Value_t>::value, "value non pointer type");
-		using pbmap_type = ProtobufMap<_Key_t, const typename std::remove_pointer<_Value_t>::type*>;
+		using pbmap_type = ProtobufMap<_Key_t, add_const_ptr_t<_Value_t>>;
 
 		auto name = typeid(pbmap_type).hash_code();
 		auto it = m_mapObject.find(name);
 		if (it != m_mapObject.end())
 		{
+#ifdef _DEBUG
 			return dynamic_cast<pbmap_type*>(it->second);
+#else
+			return static_cast<pbmap_type*>(it->second);
+#endif
 		}
 		return nullptr;
 	}
