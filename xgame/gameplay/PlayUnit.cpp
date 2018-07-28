@@ -114,12 +114,12 @@ uint32_t PlayUnit::GetPlayerNum()
 	return m_Fighters.GetPlayerNum() + m_Observers.GetPlayerNum();
 }
 
-std::vector<GamePlayerPtr>& PlayUnit::GetAllFighter()
+const std::vector<GamePlayerPtr>& PlayUnit::GetAllFighter()
 {
 	return m_Fighters.GetAllPlayer();
 }
 
-std::vector<GamePlayerPtr>& PlayUnit::GetAllObserver()
+const std::vector<GamePlayerPtr>& PlayUnit::GetAllObserver()
 {
 	return m_Observers.GetAllPlayer();
 }
