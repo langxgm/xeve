@@ -231,12 +231,12 @@ public:
 	//------------------------------------------------------------------------
 	// 有人进来
 	//------------------------------------------------------------------------
-	virtual void OnEnterPlayer(int64_t nPlayerGUID) {}
+	virtual void OnPlayerEnter(int64_t nPlayerGUID) {}
 
 	//------------------------------------------------------------------------
 	// 有人离开
 	//------------------------------------------------------------------------
-	virtual void OnLeavePlayer(int64_t nPlayerGUID) {}
+	virtual void OnPlayerLeave(int64_t nPlayerGUID) {}
 
 public:
 	int64_t GetSN() const { return m_nSN; }
