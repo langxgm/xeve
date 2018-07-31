@@ -7,7 +7,7 @@
 
 //#include <algorithm>
 
-void MessageDispatcher::DispatchMessage(int64_t nDelay, ObjID_t nSender, ObjID_t nReceiver, int32_t nMsgID, const std::shared_ptr<MsgExtraInfo>& spMsgExtraInfo)
+void MessageDispatcher::DispatchMessage(int64_t nDelay, int64_t nSender, int64_t nReceiver, int64_t nMsgID, const std::shared_ptr<MsgExtraInfo>& spMsgExtraInfo)
 {
 	Message msg;
 	msg.nMsgID = nMsgID;
@@ -19,7 +19,7 @@ void MessageDispatcher::DispatchMessage(int64_t nDelay, ObjID_t nSender, ObjID_t
 	if (nDelay <= 0)
 	{
 		// 立即发送
-		auto pReceiver = EntityManager::GetInstance()->GetEntityByID(msg.nReceiver);
+		auto pReceiver = GetReceiverByID(msg.nReceiver);
 		Discharge(pReceiver, &msg);
 	}
 	else
@@ -56,7 +56,7 @@ void MessageDispatcher::DispatchDelayedMessages(int64_t nNow)
 		auto& rMsg = (*it);
 		if (nNow > rMsg.nDispatchTime && rMsg.nDispatchTime > 0)
 		{
-			auto pReceiver = EntityManager::GetInstance()->GetEntityByID(rMsg.nReceiver);
+			auto pReceiver = GetReceiverByID(rMsg.nReceiver);
 			Discharge(pReceiver, &rMsg);
 			it = m_Messages.erase(it);
 		}
@@ -65,6 +65,11 @@ void MessageDispatcher::DispatchDelayedMessages(int64_t nNow)
 			break;
 		}
 	}
+}
+
+MessageHandler* MessageDispatcher::GetReceiverByID(int64_t nReceiver)
+{
+	return EntityManager::GetInstance()->GetEntityByID(static_cast<ObjID_t>(nReceiver));
 }
 
 void MessageDispatcher::Discharge(MessageHandler* pReceiver, const Message* pMsg)

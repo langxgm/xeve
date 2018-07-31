@@ -18,9 +18,9 @@ struct MsgExtraInfo
 
 struct Message
 {
-	int32_t			nMsgID = 0;			// 消息ID
-	int32_t			nSender = 0;		// 发送者
-	int32_t			nReceiver = 0;		// 接受者
+	int64_t			nMsgID = 0;			// 消息ID
+	int64_t			nSender = 0;		// 发送者
+	int64_t			nReceiver = 0;		// 接受者
 	int64_t			nDispatchTime = 0;	// 消息发送时间(单位:毫秒)
 	std::shared_ptr<MsgExtraInfo> spExtraInfo; // 附加的信息
 
