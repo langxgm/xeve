@@ -92,7 +92,7 @@ public:
 	virtual void OnMissMessage(uint32_t nMsgID, const void* pMsg, size_t nLen, int64_t nSessionID, const MessageMetaPtr& pMeta) {}
 
 	//------------------------------------------------------------------------
-	// 转发buffer
+	// 转发buffer(异步的)
 	//------------------------------------------------------------------------
 	virtual void OnTransfer(uint32_t nMsgID, const void* pBuf, size_t nLen, int64_t nSessionID, const MessageMetaPtr& pMeta) {}
 

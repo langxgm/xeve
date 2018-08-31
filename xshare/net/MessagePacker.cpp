@@ -245,7 +245,7 @@ bool MessagePacker::UnpackBody(MessageReceiver* pOwner, int64_t nSessionID, evpp
 	else
 	{
 		pOwner->OnMissMessage(nMsgID, s.data(), s.size(), nSessionID, pMeta);
-		pOwner->OnTransfer(nMsgID, pBuf->data() - pHeader->nTotalLen, pHeader->nTotalLen, nSessionID, pMeta);
+		pOwner->OnTransfer(nMsgID, pBuf->length() ? pBuf->data() - pHeader->nTotalLen : pBuf->data(), pHeader->nTotalLen, nSessionID, pMeta);
 	}
 
 	return true;
