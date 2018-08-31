@@ -9,6 +9,9 @@
 #include <evpp/timestamp.h>
 #include <gflags/gflags.h>
 
+// 当前程序的ID
+DEFINE_int32(id, 1, "the application id");
+
 Application::Application()
 {
 	m_pEnv = new Env(this);
@@ -62,6 +65,11 @@ std::string GetLogDir(const char* argv0)
 	return "";
 }
 
+int32_t Application::GetID()
+{
+	return FLAGS_id;
+}
+
 bool Application::Init(int argc, char** argv)
 {
 	//google::ShowUsageWithFlags(argv[0]);
@@ -110,7 +118,7 @@ bool Application::Init(int argc, char** argv)
 #else
 	std::string type = "RELEASE";
 #endif
-	LOG(WARNING) << "Start " << GetName() << " -" << type;
+	LOG(WARNING) << "Start " << GetName() << " -" << type << " -id=" << GetID();
 	LOG(WARNING) << "Build date: " << GetBuildTime();
 
 	LOG(WARNING) << GetLogFlagsInfo();
