@@ -234,7 +234,7 @@ public:
 				auto& pPlayer = it.second;
 				if (pPlayer->GetPlayerGUID() != nExcludeGUID)
 				{
-					vecSessionID.push_back(pPlayer->GetGwsSessionID());
+					vecSessionID.push_back(pPlayer->GetSessionID());
 				}
 			}
 		}
@@ -247,17 +247,19 @@ public:
 	virtual std::set<int64_t> GetAllSessionID_set(int64_t nExcludeGUID = 0) override
 	{
 		int64_t nExcludeSessionID = 0;
+		int32_t nRefCount = 0;
 		std::set<int64_t> setSessionID;
 		for (auto& it : m_mapPlayers)
 		{
 			auto& pPlayer = it.second;
-			setSessionID.insert(pPlayer->GetGwsSessionID());
+			setSessionID.insert(pPlayer->GetSessionID());
 			if (pPlayer->GetPlayerGUID() == nExcludeGUID)
 			{
-				nExcludeSessionID = pPlayer->GetGwsSessionID();
+				nExcludeSessionID = pPlayer->GetSessionID();
+				++nRefCount;
 			}
 		}
-		if (nExcludeSessionID != 0)
+		if (nExcludeSessionID != 0 && nRefCount == 1)
 		{
 			setSessionID.erase(nExcludeSessionID);
 		}
@@ -474,6 +476,7 @@ public:
 	virtual std::set<int64_t> GetAllSessionID_set(int64_t nExcludeGUID = 0) override
 	{
 		int64_t nExcludeSessionID = 0;
+		int32_t nRefCount = 0;
 		std::set<int64_t> setSessionID;
 		for (auto& pPlayer : m_vecPlayers)
 		{
@@ -481,9 +484,10 @@ public:
 			if (pPlayer->GetPlayerGUID() == nExcludeGUID)
 			{
 				nExcludeSessionID = pPlayer->GetSessionID();
+				++nRefCount;
 			}
 		}
-		if (nExcludeSessionID != 0)
+		if (nExcludeSessionID != 0 && nRefCount == 1)
 		{
 			setSessionID.erase(nExcludeSessionID);
 		}
@@ -496,6 +500,7 @@ public:
 	virtual std::set<int64_t> GetUnionSessionID_set(const GamePlayerVector<key_type, value_type>& rOther, int64_t nExcludeGUID = 0)
 	{
 		int64_t nExcludeSessionID = 0;
+		int32_t nRefCount = 0;
 		std::set<int64_t> setSessionID;
 		for (auto& pPlayer : m_vecPlayers)
 		{
@@ -503,6 +508,7 @@ public:
 			if (pPlayer->GetPlayerGUID() == nExcludeGUID)
 			{
 				nExcludeSessionID = pPlayer->GetSessionID();
+				++nRefCount;
 			}
 		}
 		for (auto& pPlayer : rOther.m_vecPlayers)
@@ -511,9 +517,10 @@ public:
 			if (pPlayer->GetPlayerGUID() == nExcludeGUID)
 			{
 				nExcludeSessionID = pPlayer->GetSessionID();
+				++nRefCount;
 			}
 		}
-		if (nExcludeSessionID != 0)
+		if (nExcludeSessionID != 0 && nRefCount == 1)
 		{
 			setSessionID.erase(nExcludeSessionID);
 		}
