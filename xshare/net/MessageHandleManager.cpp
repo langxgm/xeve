@@ -31,7 +31,12 @@ void MessageHandleManager::Register(uint32_t nMsgID, const MessageHandleFunc& ha
 
 void MessageHandleManager::UnRegister(uint32_t nMsgID)
 {
-	m_mapHandle.erase(nMsgID);
+	auto it = m_mapHandle.find(nMsgID);
+	if (it != m_mapHandle.end())
+	{
+		delete (it->second);
+		m_mapHandle.erase(it);
+	}
 }
 
 int MessageHandleManager::HandleMessage(uint32_t nMsgID, const MessagePtr& pMsg, int64_t nSessionID, const MessageMetaPtr& pMeta)
