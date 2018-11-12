@@ -36,6 +36,10 @@ bool RedisAccess::Connect()
 					{
 						cpp_redis::warn(std::string("redis client disconnected from ") + host + ":" + std::to_string(port), __FILE__, __LINE__);
 					}
+					else if (status == cpp_redis::client::connect_state::ok)
+					{
+						cpp_redis::warn(std::string("redis client connect ok to ") + host + ":" + std::to_string(port), __FILE__, __LINE__);
+					}
 				}, 0, -1, 5000);
 			}
 			else
@@ -55,7 +59,11 @@ bool RedisAccess::Connect()
 					{
 						cpp_redis::warn(std::string("redis client disconnected from ") + host + ":" + std::to_string(port), __FILE__, __LINE__);
 					}
-				});
+					else if (status == cpp_redis::client::connect_state::ok)
+					{
+						cpp_redis::warn(std::string("redis client connect ok to ") + host + ":" + std::to_string(port), __FILE__, __LINE__);
+					}
+				}, 0, -1, 5000);
 				if (m_pClient->is_connected())
 				{
 					std::cout << "redis PING" << std::endl;
