@@ -1,6 +1,7 @@
 ﻿
 #include "RedisExecutor.h"
 #include "RedisAccess.h"
+#include "RedisSubscriber.h"
 
 #ifdef OPEN_REDIS_CLIENT
 
@@ -27,6 +28,11 @@ RedisExecutor::~RedisExecutor()
 cpp_redis::client* RedisExecutor::operator->()
 {
 	return RedisAccess::Me()->GetAccessor();
+}
+
+cpp_redis::subscriber* RedisExecutor::GetSubscriber()
+{
+	return RedisSubscriber::Me()->GetSubscriber();
 }
 
 #endif

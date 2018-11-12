@@ -30,6 +30,7 @@
     <ClInclude Include="redis\RedisClient.h" />
     <ClInclude Include="redis\RedisExecutor.h" />
     <ClInclude Include="redis\RedisMacro.h" />
+    <ClInclude Include="redis\RedisSubscriber.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DBHandlerManager.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="redis\RedisAccess.cpp" />
     <ClCompile Include="redis\RedisClient.cpp" />
     <ClCompile Include="redis\RedisExecutor.cpp" />
+    <ClCompile Include="redis\RedisSubscriber.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

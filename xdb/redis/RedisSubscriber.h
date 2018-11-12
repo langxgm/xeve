@@ -1,10 +1,10 @@
 ﻿//------------------------------------------------------------------------
-// * @filename: RedisClient.h
+// * @filename: RedisSubscriber.h
 // *
-// * @brief: Redis客户端
+// * @brief: Redis订阅
 // *
 // * @author: XGM
-// * @date: 2018/06/04
+// * @date: 2018/09/06
 //------------------------------------------------------------------------
 #pragma once
 
@@ -13,46 +13,47 @@
 #ifdef OPEN_REDIS_CLIENT
 
 #include "xbase/Singleton.h"
-#include "xdb/DBClient.h"
 
-class RedisClient : public DBClient, public Singleton<RedisClient>
+#include <string>
+#include <memory>
+
+namespace cpp_redis {
+	class subscriber;
+}
+
+class RedisSubscriber : public Singleton<RedisSubscriber>
 {
 protected:
-	friend class Singleton<RedisClient>;
-	RedisClient();
-	virtual ~RedisClient();
-public:
-	enum
-	{
-		init_client = 1, // 客户端连接
-		init_subscriber = 2, // 订阅功能
-	};
+	friend class Singleton<RedisSubscriber>;
+	RedisSubscriber();
+	virtual ~RedisSubscriber();
 public:
 	//------------------------------------------------------------------------
-	// 初始化
+	// 配置
 	//------------------------------------------------------------------------
-	virtual bool Init(std::string strHost,
-		std::string strUserName,
-		std::string strPassword) override;
+	void Configure(std::string strHost, std::string strUserName, std::string strPassword);
 
 	//------------------------------------------------------------------------
-	// 启动服务
+	// 连接
 	//------------------------------------------------------------------------
-	virtual bool Start() override;
+	bool Connect();
 
 	//------------------------------------------------------------------------
-	// 停止服务
+	// 断开
 	//------------------------------------------------------------------------
-	virtual bool Stop() override;
+	void Disconnect();
 
+public:
 	//------------------------------------------------------------------------
-	// 设置初始化标记
+	// 获得订阅者
 	//------------------------------------------------------------------------
-	void SetInitFlag(int32_t nFlag = init_client);
+	cpp_redis::subscriber* GetSubscriber();
 
 protected:
-	// 初始化标记
-	int32_t m_nFlag = init_client;
+	// redis订阅者
+	std::unique_ptr<cpp_redis::subscriber> m_pSubscriber;
+	// 目标地址
+	std::string m_strHost;
 };
 
 #endif

@@ -36,6 +36,9 @@
     <ClInclude Include="redis\RedisMacro.h">
       <Filter>redis</Filter>
     </ClInclude>
+    <ClInclude Include="redis\RedisSubscriber.h">
+      <Filter>redis</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mongo\MongoClient.cpp">
@@ -55,6 +58,9 @@
       <Filter>redis</Filter>
     </ClCompile>
     <ClCompile Include="redis\RedisExecutor.cpp">
+      <Filter>redis</Filter>
+    </ClCompile>
+    <ClCompile Include="redis\RedisSubscriber.cpp">
       <Filter>redis</Filter>
     </ClCompile>
   </ItemGroup>
