@@ -116,6 +116,7 @@ void HttpClientWorker::DoPost(const evpp::httpc::Handler& h, const std::string& 
 {
 	auto l = m_pLoopPool->GetNextLoop();
 	auto r = new evpp::httpc::PostRequest(m_pConnPool.get(), l, uri_with_param, body);
+	r->AddHeader("Content-Type", "application/x-www-form-urlencoded");
 	r->Execute(h);
 }
 
@@ -123,6 +124,7 @@ void HttpClientWorker::DoPost(const HttpHandler& h, const std::string& uri_with_
 {
 	auto l = m_pLoopPool->GetNextLoop();
 	auto r = new evpp::httpc::PostRequest(m_pConnPool.get(), l, uri_with_param, body);
+	r->AddHeader("Content-Type", "application/x-www-form-urlencoded");
 	r->Execute(std::bind(h, std::placeholders::_1, l));
 }
 
@@ -130,6 +132,7 @@ void HttpClientWorker::DoPostWithUrl(const evpp::httpc::Handler& h, const std::s
 {
 	auto l = m_pLoopPool->GetNextLoop();
 	auto r = new evpp::httpc::PostRequest(l, url, body, evpp::Duration(timeout));
+	r->AddHeader("Content-Type", "application/x-www-form-urlencoded");
 	r->Execute(h);
 }
 
@@ -137,6 +140,7 @@ void HttpClientWorker::DoPostWithUrl(const HttpHandler& h, const std::string& ur
 {
 	auto l = m_pLoopPool->GetNextLoop();
 	auto r = new evpp::httpc::PostRequest(l, url, body, evpp::Duration(timeout));
+	r->AddHeader("Content-Type", "application/x-www-form-urlencoded");
 	r->Execute(std::bind(h, std::placeholders::_1, l));
 }
 
