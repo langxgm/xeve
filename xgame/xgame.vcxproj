@@ -135,6 +135,13 @@
     <ClInclude Include="gameplay\GamePlay.h" />
     <ClInclude Include="gameplay\PlaySystem.h" />
     <ClInclude Include="gameplay\PlayUnit.h" />
+    <ClInclude Include="lockstep\Frame.h" />
+    <ClInclude Include="lockstep\FrameExecutor.h" />
+    <ClInclude Include="lockstep\FrameGame.h" />
+    <ClInclude Include="lockstep\FrameGameManager.h" />
+    <ClInclude Include="lockstep\FrameImpl.h" />
+    <ClInclude Include="lockstep\FrameRoom.h" />
+    <ClInclude Include="lockstep\FrameSequence.h" />
     <ClInclude Include="message\Message.h" />
     <ClInclude Include="message\MessageDispatcher.h" />
     <ClInclude Include="message\MessageHandler.h" />
@@ -155,6 +162,11 @@
     <ClCompile Include="gameplay\GamePlay.cpp" />
     <ClCompile Include="gameplay\PlayUnit.cpp" />
     <ClCompile Include="gameplay\PlayUnitEvent.cpp" />
+    <ClCompile Include="lockstep\FrameExecutor.cpp" />
+    <ClCompile Include="lockstep\FrameGame.cpp" />
+    <ClCompile Include="lockstep\FrameImpl.cpp" />
+    <ClCompile Include="lockstep\FrameRoom.cpp" />
+    <ClCompile Include="lockstep\FrameSequence.cpp" />
     <ClCompile Include="message\MessageDispatcher.cpp" />
     <ClCompile Include="object\EntityManager.cpp" />
     <ClCompile Include="object\GameObject_Dynamic.cpp" />

@@ -16,6 +16,9 @@
     <Filter Include="gameplayer">
       <UniqueIdentifier>{33c95c4e-b87d-44f6-b33f-b1e38a567f6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lockstep">
+      <UniqueIdentifier>{653a1b0e-f2aa-48da-a0ed-7e0cc4420f44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="message\Message.h">
@@ -87,6 +90,27 @@
     <ClInclude Include="gameplayer\GamePlayerFactory.h">
       <Filter>gameplayer</Filter>
     </ClInclude>
+    <ClInclude Include="lockstep\Frame.h">
+      <Filter>lockstep</Filter>
+    </ClInclude>
+    <ClInclude Include="lockstep\FrameExecutor.h">
+      <Filter>lockstep</Filter>
+    </ClInclude>
+    <ClInclude Include="lockstep\FrameGame.h">
+      <Filter>lockstep</Filter>
+    </ClInclude>
+    <ClInclude Include="lockstep\FrameGameManager.h">
+      <Filter>lockstep</Filter>
+    </ClInclude>
+    <ClInclude Include="lockstep\FrameImpl.h">
+      <Filter>lockstep</Filter>
+    </ClInclude>
+    <ClInclude Include="lockstep\FrameRoom.h">
+      <Filter>lockstep</Filter>
+    </ClInclude>
+    <ClInclude Include="lockstep\FrameSequence.h">
+      <Filter>lockstep</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="message\MessageDispatcher.cpp">
@@ -109,6 +133,21 @@
     </ClCompile>
     <ClCompile Include="gameplay\PlayUnitEvent.cpp">
       <Filter>gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="lockstep\FrameExecutor.cpp">
+      <Filter>lockstep</Filter>
+    </ClCompile>
+    <ClCompile Include="lockstep\FrameGame.cpp">
+      <Filter>lockstep</Filter>
+    </ClCompile>
+    <ClCompile Include="lockstep\FrameImpl.cpp">
+      <Filter>lockstep</Filter>
+    </ClCompile>
+    <ClCompile Include="lockstep\FrameRoom.cpp">
+      <Filter>lockstep</Filter>
+    </ClCompile>
+    <ClCompile Include="lockstep\FrameSequence.cpp">
+      <Filter>lockstep</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
