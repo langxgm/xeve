@@ -21,7 +21,7 @@
 1. [Visual Studio 2017]
 2. 使用[vcpkg]安装`evpp`,`glog`,`gflags`,`gtest`,`protobuf`,`mongo-cxx-driver`,`libgo`,`cpp_redis`
 
-[xeve]:https://github.com/xgm-skywave/xeve
+[xeve]:https://github.com/langxgm/xeve
 [Visual Studio 2017]:https://www.visualstudio.com
 [vcpkg]:https://github.com/Microsoft/vcpkg
 [evpp]:https://github.com/Qihoo360/evpp
