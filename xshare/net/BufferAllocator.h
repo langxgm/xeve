@@ -12,6 +12,7 @@
 #include <string>
 #include <memory>
 #include <mutex>
+#include <functional>
 #include <stdint.h>
 
 namespace evpp {

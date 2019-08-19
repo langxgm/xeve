@@ -11,6 +11,7 @@
 #include <map>
 #include <mutex>
 #include <memory>
+#include <functional>
 
 class Session;
 typedef std::shared_ptr<Session> SessionPtr;
