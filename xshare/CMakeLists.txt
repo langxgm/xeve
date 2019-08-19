@@ -30,6 +30,7 @@ if (UNIX)
     set(CMAKE_CXX_FLAGS_DEBUG   "-O0 -g -ggdb -D_DEBUG")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3 -g -ggdb -DNDEBUG")
     add_definitions(-DEVPP_HTTP_CLIENT_SUPPORTS_SSL)
+    add_definitions(-DEVPP_HTTP_SERVER_SUPPORTS_SSL)
 endif()
 
 message("------------ Cxx flags -------------")
