@@ -10,6 +10,7 @@
 
 #include "MongoAccess.h"
 
+#include <bsoncxx/builder/stream/document.hpp>
 #include <mongocxx/collection.hpp>
 
 #include <string>

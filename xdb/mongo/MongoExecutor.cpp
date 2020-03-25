@@ -4,6 +4,8 @@
 
 #include <mongocxx/client.hpp>
 
+#include <assert.h>
+
 MongoExecutor::MongoExecutor()
 {
 	auto pClient = MongoClient::Me();
