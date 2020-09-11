@@ -1,8 +1,8 @@
 ﻿
 #include "GamePlay.h"
 #include "PlayUnit.h"
-#include "xgame/gameplayer/GamePlayerFactory.h"
-#include "xgame/gameplayer/GamePlayerActorManager.h"
+#include "xgame/player/GamePlayerFactory.h"
+#include "xgame/player/GamePlayerActorManager.h"
 
 GamePlay::GamePlay()
 {

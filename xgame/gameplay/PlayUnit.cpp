@@ -1,6 +1,6 @@
 ﻿
 #include "PlayUnit.h"
-#include "xgame/gameplayer/GamePlayer.h"
+#include "xgame/player/GamePlayer.h"
 
 PlayUnit::PlayUnit()
 {

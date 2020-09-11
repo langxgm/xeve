@@ -22,32 +22,32 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{E6B22127-5D14-4804-A507-312B7115CEFD}</ProjectGuid>
     <RootNamespace>xgame</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -127,11 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="gameplayer\GamePlayer.h" />
-    <ClInclude Include="gameplayer\GamePlayerActor.h" />
-    <ClInclude Include="gameplayer\GamePlayerActorManager.h" />
-    <ClInclude Include="gameplayer\GamePlayerCollection.h" />
-    <ClInclude Include="gameplayer\GamePlayerFactory.h" />
     <ClInclude Include="gameplay\GamePlay.h" />
     <ClInclude Include="gameplay\PlaySystem.h" />
     <ClInclude Include="gameplay\PlayUnit.h" />
@@ -154,6 +149,11 @@
     <ClInclude Include="object\GameObject_Entity.h" />
     <ClInclude Include="object\GameObject_Static.h" />
     <ClInclude Include="object\GameType.h" />
+    <ClInclude Include="player\GamePlayer.h" />
+    <ClInclude Include="player\GamePlayerActor.h" />
+    <ClInclude Include="player\GamePlayerActorManager.h" />
+    <ClInclude Include="player\GamePlayerCollection.h" />
+    <ClInclude Include="player\GamePlayerFactory.h" />
     <ClInclude Include="state\State.h" />
     <ClInclude Include="state\StateMachine.h" />
     <ClInclude Include="state\StateManager.h" />

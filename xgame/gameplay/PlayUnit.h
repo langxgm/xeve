@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------
 #pragma once
 
-#include "xgame/gameplayer/GamePlayerCollection.h"
+#include "xgame/player/GamePlayerCollection.h"
 
 #include <set>
 #include <vector>
