@@ -127,9 +127,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="gameplay\GamePlay.h" />
-    <ClInclude Include="gameplay\PlaySystem.h" />
-    <ClInclude Include="gameplay\PlayUnit.h" />
     <ClInclude Include="lockstep\Frame.h" />
     <ClInclude Include="lockstep\FrameExecutor.h" />
     <ClInclude Include="lockstep\FrameGame.h" />
@@ -152,16 +149,15 @@
     <ClInclude Include="player\GamePlayer.h" />
     <ClInclude Include="player\GamePlayerActor.h" />
     <ClInclude Include="player\GamePlayerActorManager.h" />
-    <ClInclude Include="player\GamePlayerCollection.h" />
     <ClInclude Include="player\GamePlayerFactory.h" />
+    <ClInclude Include="room\RoomBase.h" />
+    <ClInclude Include="room\RoomContainer.h" />
+    <ClInclude Include="room\RoomRegistry.h" />
     <ClInclude Include="state\State.h" />
     <ClInclude Include="state\StateMachine.h" />
     <ClInclude Include="state\StateManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gameplay\GamePlay.cpp" />
-    <ClCompile Include="gameplay\PlayUnit.cpp" />
-    <ClCompile Include="gameplay\PlayUnitEvent.cpp" />
     <ClCompile Include="lockstep\FrameExecutor.cpp" />
     <ClCompile Include="lockstep\FrameGame.cpp" />
     <ClCompile Include="lockstep\FrameImpl.cpp" />
@@ -171,6 +167,9 @@
     <ClCompile Include="object\EntityManager.cpp" />
     <ClCompile Include="object\GameObject_Dynamic.cpp" />
     <ClCompile Include="object\GameObject_Static.cpp" />
+    <ClCompile Include="room\RoomBase.cpp" />
+    <ClCompile Include="room\RoomBaseEvent.cpp" />
+    <ClCompile Include="room\RoomContainer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

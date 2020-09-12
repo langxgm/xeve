@@ -1,37 +1,39 @@
 ﻿//------------------------------------------------------------------------
-// * @filename: GamePlay.h
+// * @filename: RoomContainer.h
 // *
-// * @brief: 游戏玩法
+// * @brief: 房间容器
 // *
 // * @author: XGM
-// * @date: 2018/06/07
+// * @date: 2020/09/10
 //------------------------------------------------------------------------
 #pragma once
 
 #include <map>
 #include <list>
 #include <string>
-#include <memory>
+#include <stdint.h>
 
-class PlayUnit;
-typedef std::shared_ptr<PlayUnit> PlayUnitPtr;
-
+class RoomBase;
 class GamePlayerFactory;
-typedef std::shared_ptr<GamePlayerFactory> GamePlayerFactoryPtr;
-
 class GamePlayerActorManager;
-typedef std::unique_ptr<GamePlayerActorManager> GamePlayerActorManagerPtr;
 
-class GamePlay
+class RoomContainer
 {
 public:
-	GamePlay();
-	virtual ~GamePlay();
+	RoomContainer();
+	virtual ~RoomContainer();
+	virtual void CleanUp();
+
 protected:
 	//------------------------------------------------------------------------
-	// 内部创建单元
+	// 内部创建房间
 	//------------------------------------------------------------------------
-	virtual PlayUnit* CreateUnit() = 0;
+	virtual RoomBase* CreateRoom() = 0;
+
+	//------------------------------------------------------------------------
+	// 回收房间
+	//------------------------------------------------------------------------
+	virtual void RecycleRoom(RoomBase* pRoom);
 
 	//------------------------------------------------------------------------
 	// 创建玩家的工厂
@@ -44,25 +46,25 @@ protected:
 	virtual GamePlayerActorManager* CreateActorManager();
 
 	//------------------------------------------------------------------------
-	// 生成序列号
+	// 生成房间号
 	//------------------------------------------------------------------------
-	virtual uint64_t GenSerialNumber();
+	virtual int64_t NextRoomNumber();
 
 public:
 	//------------------------------------------------------------------------
 	// 初始化
 	//------------------------------------------------------------------------
-	virtual void Init(const std::string& strName, uint32_t nLimit);
+	virtual void Init(const std::string& strName, int32_t nCapacity);
 
 	//------------------------------------------------------------------------
 	// 注册状态
 	//------------------------------------------------------------------------
-	virtual void OnRegState() {}
+	virtual void OnRegisterState() {}
 
 	//------------------------------------------------------------------------
 	// 注册玩家扮演的角色
 	//------------------------------------------------------------------------
-	virtual void OnRegPlayerActor() {}
+	virtual void OnRegisterPlayerActor() {}
 
 	//------------------------------------------------------------------------
 	// 更新
@@ -70,66 +72,57 @@ public:
 	virtual void Update();
 
 	//------------------------------------------------------------------------
-	// 增加单元
+	// 增加房间
 	//------------------------------------------------------------------------
-	virtual PlayUnitPtr AddUnit(int64_t nSN = 0);
-
-	template<typename T>
-	std::shared_ptr<T> AddUnit_cast(int64_t nSN = 0)
-	{
-		return std::static_pointer_cast<T>(AddUnit(nSN));
-	}
+	virtual RoomBase* AddRoom(int64_t nRoomID);
 
 	//------------------------------------------------------------------------
-	// 删除单元
+	// 删除房间
 	//------------------------------------------------------------------------
-	virtual bool DelUnit(int64_t nSN);
+	virtual bool RemoveRoom(int64_t nRoomID);
 
 	//------------------------------------------------------------------------
-	// 获得单元
+	// 获得房间
 	//------------------------------------------------------------------------
-	virtual PlayUnitPtr GetUnit(int64_t nSN);
-
-	template<typename T>
-	std::shared_ptr<T> GetUnit_cast(int64_t nSN)
-	{
-		return std::static_pointer_cast<T>(GetUnit(nSN));
-	}
+	virtual RoomBase* GetRoom(int64_t nRoomID);
+	virtual const RoomBase* PeekRoom(int64_t nRoomID) const;
 
 	//------------------------------------------------------------------------
 	// 获得玩家的工厂
 	//------------------------------------------------------------------------
-	const GamePlayerFactoryPtr& GetPlayerFactory() { return m_pPlayerFactory; }
+	GamePlayerFactory* GetPlayerFactory() { return m_pPlayerFactory; }
 
 	//------------------------------------------------------------------------
 	// 获得玩家扮演的角色管理
 	//------------------------------------------------------------------------
-	const GamePlayerActorManagerPtr& GetActorManager() { return m_pActorManager; }
+	GamePlayerActorManager* GetActorManager() { return m_pActorManager; }
 
 public:
-	const std::string& GetName() { return m_strName; }
+	const std::string& GetName() const { return m_strName; }
 
-	uint32_t GetLimit() { return  m_nLimit; }
+	int32_t GetCapacity() const { return  m_nCapacity; }
+	int32_t GetRoomSize() const { return static_cast<int32_t>(m_mapRoom.size()); }
+	int32_t GetAliveSize() const { return static_cast<int32_t>(m_listAliveRoom.size()); }
 
 protected:
-	// 名字
+	// 容器名称
 	std::string m_strName;
 
-	// 单元映射表 <唯一ID, 单元>
-	std::map<int64_t, PlayUnitPtr> m_mapPlayUnit;
+	// 容量
+	int32_t m_nCapacity = 0;
 
-	// 存活的单元列表
-	std::list<PlayUnitPtr> m_listAlivePlayUnit;
+	// 自增的房间号
+	int64_t m_nRoomNumber = 0;
 
-	// 数量限制
-	uint32_t m_nLimit = 0;
+	// 房间映射表 <房间ID, 房间>
+	std::map<int64_t, RoomBase*> m_mapRoom;
 
-	// 生成唯一ID的自增序列
-	uint64_t m_nGenSerialNumber = 0;
+	// 存活的房间列表
+	std::list<RoomBase*> m_listAliveRoom;
 
 	// 创建玩家的工厂
-	GamePlayerFactoryPtr m_pPlayerFactory;
+	GamePlayerFactory* m_pPlayerFactory = nullptr;
 
 	// 玩家扮演的角色管理
-	GamePlayerActorManagerPtr m_pActorManager;
+	GamePlayerActorManager* m_pActorManager = nullptr;
 };

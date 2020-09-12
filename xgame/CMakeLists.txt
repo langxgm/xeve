@@ -21,7 +21,7 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/object SRC_LIST)
 aux_source_directory(${PROJECT_SOURCE_DIR}/message SRC_LIST)
 aux_source_directory(${PROJECT_SOURCE_DIR}/state SRC_LIST)
 aux_source_directory(${PROJECT_SOURCE_DIR}/gameplayer SRC_LIST)
-aux_source_directory(${PROJECT_SOURCE_DIR}/gameplay SRC_LIST)
+aux_source_directory(${PROJECT_SOURCE_DIR}/room SRC_LIST)
 aux_source_directory(${PROJECT_SOURCE_DIR}/lockstep SRC_LIST)
 include_directories(${PROJECT_SOURCE_DIR}/..)
 

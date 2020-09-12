@@ -10,14 +10,14 @@
     <Filter Include="state">
       <UniqueIdentifier>{e4aed057-a6ec-4eb4-863b-fa3cac7957db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="gameplay">
-      <UniqueIdentifier>{f0f52d5f-364b-4572-8d2e-3b63272dddba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="lockstep">
       <UniqueIdentifier>{653a1b0e-f2aa-48da-a0ed-7e0cc4420f44}</UniqueIdentifier>
     </Filter>
     <Filter Include="player">
       <UniqueIdentifier>{953d45e5-f3f1-4299-a869-b30058915c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="room">
+      <UniqueIdentifier>{82e664e7-31ec-4f7d-9518-6544b2b81e28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,15 +66,6 @@
     <ClInclude Include="state\StateManager.h">
       <Filter>state</Filter>
     </ClInclude>
-    <ClInclude Include="gameplay\GamePlay.h">
-      <Filter>gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="gameplay\PlayUnit.h">
-      <Filter>gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="gameplay\PlaySystem.h">
-      <Filter>gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="lockstep\Frame.h">
       <Filter>lockstep</Filter>
     </ClInclude>
@@ -105,11 +96,17 @@
     <ClInclude Include="player\GamePlayerActorManager.h">
       <Filter>player</Filter>
     </ClInclude>
-    <ClInclude Include="player\GamePlayerCollection.h">
-      <Filter>player</Filter>
-    </ClInclude>
     <ClInclude Include="player\GamePlayerFactory.h">
       <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="room\RoomBase.h">
+      <Filter>room</Filter>
+    </ClInclude>
+    <ClInclude Include="room\RoomContainer.h">
+      <Filter>room</Filter>
+    </ClInclude>
+    <ClInclude Include="room\RoomRegistry.h">
+      <Filter>room</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -125,15 +122,6 @@
     <ClCompile Include="object\GameObject_Static.cpp">
       <Filter>object</Filter>
     </ClCompile>
-    <ClCompile Include="gameplay\PlayUnit.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="gameplay\GamePlay.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="gameplay\PlayUnitEvent.cpp">
-      <Filter>gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="lockstep\FrameExecutor.cpp">
       <Filter>lockstep</Filter>
     </ClCompile>
@@ -148,6 +136,15 @@
     </ClCompile>
     <ClCompile Include="lockstep\FrameSequence.cpp">
       <Filter>lockstep</Filter>
+    </ClCompile>
+    <ClCompile Include="room\RoomBase.cpp">
+      <Filter>room</Filter>
+    </ClCompile>
+    <ClCompile Include="room\RoomBaseEvent.cpp">
+      <Filter>room</Filter>
+    </ClCompile>
+    <ClCompile Include="room\RoomContainer.cpp">
+      <Filter>room</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
