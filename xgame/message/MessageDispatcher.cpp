@@ -69,7 +69,8 @@ void MessageDispatcher::DispatchDelayedMessages(int64_t nNow)
 
 MessageHandler* MessageDispatcher::GetReceiverByID(int64_t nReceiver)
 {
-	return EntityManager::GetInstance()->GetEntityByID(static_cast<ObjID_t>(nReceiver));
+	/*return EntityManager::GetInstance()->GetEntityByID(static_cast<ObjectID_t>(nReceiver));*/
+	return nullptr;
 }
 
 void MessageDispatcher::Discharge(MessageHandler* pReceiver, const Message* pMsg)

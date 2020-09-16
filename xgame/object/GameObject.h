@@ -13,6 +13,11 @@
 
 class GameObjectAttribute;
 
+struct GAME_OBJECT_INIT
+{
+	virtual void CleanUp() {}
+};
+
 class GameObject
 {
 public:
@@ -22,19 +27,34 @@ public:
 	GameObject() {}
 	virtual ~GameObject() {}
 
-	ObjID_t GetObjID() const { return m_nObjID; }
-	void SetObjID(ObjID_t nID) { m_nObjID = nID; }
+	virtual int32_t GetObjectType() const = 0;
 
-	virtual GameObjectType GetType() = 0;
+	virtual GameObject* Clone() = 0;
 
-	virtual void HeartBeat(uint32_t nElapsed, uint32_t nTime) = 0;
+	virtual void CopyTo(GameObject& rhs) {
+		rhs.m_nObjectID = m_nObjectID;
+		rhs.m_bActive = m_bActive;
+	}
 
-	//------------------------------------------------------------------------
-	// 获取属性
-	//------------------------------------------------------------------------
-	virtual GameObjectAttribute* GetAttr() = 0;
+	virtual void CleanUp() {
+		m_nObjectID = INVALID_ID;
+		m_bActive = false;
+	}
 
-private:
-	// 对象的id
-	ObjID_t m_nObjID;
+	virtual bool Init(const GAME_OBJECT_INIT* pInit) { return true; }
+
+	virtual void Tick(int64_t nTime, int64_t nElapsed) = 0;
+
+	virtual GameObjectAttribute* GetAttrInterface() { return nullptr; }
+
+public:
+	ObjectID_t GetID() const { return m_nObjectID; }
+	void SetID(ObjectID_t nID) { m_nObjectID = nID; }
+
+	virtual bool IsActiveObj() const { return m_bActive; }
+	virtual void SetActiveFlag(bool bFlag) { m_bActive = bFlag; }
+
+protected:
+	ObjectID_t m_nObjectID = INVALID_ID;
+	bool m_bActive = false;
 };

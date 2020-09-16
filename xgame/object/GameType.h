@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 // 游戏对象的ID类型
-typedef uint32_t ObjID_t;
+typedef int32_t ObjectID_t;
 
 // 无效的ID值
 #define INVALID_ID (-1)

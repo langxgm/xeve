@@ -8,34 +8,41 @@
 //------------------------------------------------------------------------
 #pragma once
 
-#include "xbase/Singleton.h"
 #include "GameType.h"
 
 #include <map>
 
 class GameObject_Entity;
 
-class EntityManager : public Singleton<EntityManager>
+class EntityManager
 {
 public:
-	typedef std::map<ObjID_t, GameObject_Entity*> EntityMap_t;
-protected:
-	friend class Singleton<EntityManager>;
-	EntityManager()
-	{
-	}
+	typedef std::map<ObjectID_t, GameObject_Entity*> EntityMap_t;
+public:
+	EntityManager();
 	~EntityManager();
 
-public:
+	void CleanUp();
+
 	//------------------------------------------------------------------------
 	// 存储对象
 	//------------------------------------------------------------------------
-	void RegisterEntity(GameObject_Entity* pEntity);
+	bool RegisterEntity(GameObject_Entity* pEntity);
+
+	//------------------------------------------------------------------------
+	// 销毁对象
+	//------------------------------------------------------------------------
+	bool UnregisterEntity(ObjectID_t nObjectID);
 
 	//------------------------------------------------------------------------
 	// 获得对象
 	//------------------------------------------------------------------------
-	GameObject_Entity* GetEntityByID(ObjID_t nID);
+	GameObject_Entity* GetEntityByID(ObjectID_t nObjectID);
+
+	//------------------------------------------------------------------------
+	// 获得列表
+	//------------------------------------------------------------------------
+	EntityMap_t& GetEntities() { return m_EntityMap; }
 
 private:
 	// 存储对象,key=nID
