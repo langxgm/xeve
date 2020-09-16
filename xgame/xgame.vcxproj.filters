@@ -19,6 +19,9 @@
     <Filter Include="room">
       <UniqueIdentifier>{82e664e7-31ec-4f7d-9518-6544b2b81e28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{8dc470a4-5ee2-4e99-8f84-3ccdde681daf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="message\Message.h">
@@ -107,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="room\RoomRegistry.h">
       <Filter>room</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\SceneBase.h">
+      <Filter>scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

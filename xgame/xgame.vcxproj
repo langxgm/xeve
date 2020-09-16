@@ -153,6 +153,7 @@
     <ClInclude Include="room\RoomBase.h" />
     <ClInclude Include="room\RoomContainer.h" />
     <ClInclude Include="room\RoomRegistry.h" />
+    <ClInclude Include="scene\SceneBase.h" />
     <ClInclude Include="state\State.h" />
     <ClInclude Include="state\StateMachine.h" />
     <ClInclude Include="state\StateManager.h" />
