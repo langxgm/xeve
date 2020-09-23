@@ -18,12 +18,11 @@ RoomContainer::~RoomContainer()
 
 void RoomContainer::CleanUp()
 {
-	delete m_pActorManager;
-	m_pActorManager = nullptr;
+	m_strName.clear();
+	m_nCapacity = 0;
+	m_nRoomNumber = 0;
 
-	delete m_pPlayerFactory;
-	m_pPlayerFactory = nullptr;
-
+	m_mapRoom.clear();
 	for (auto it : m_listAliveRoom)
 	{
 		RoomBase* pRoom = it;
@@ -31,11 +30,12 @@ void RoomContainer::CleanUp()
 		RecycleRoom(pRoom);
 	}
 	m_listAliveRoom.clear();
-	m_mapRoom.clear();
 
-	m_nRoomNumber = 0;
-	m_nCapacity = 0;
-	m_strName.clear();
+	delete m_pPlayerFactory;
+	m_pPlayerFactory = nullptr;
+
+	delete m_pActorManager;
+	m_pActorManager = nullptr;
 }
 
 void RoomContainer::RecycleRoom(RoomBase* pRoom)

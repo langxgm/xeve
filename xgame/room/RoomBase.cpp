@@ -17,6 +17,14 @@ RoomBase::~RoomBase()
 
 void RoomBase::CleanUp()
 {
+	m_pContainer = nullptr;
+	m_nRoomID = 0;
+	m_bAlive = false;
+	m_nCreateTime = 0;
+	m_nCreatorGUID = 0;
+	m_nOwnerGUID = 0;
+
+	m_mapPlayer.clear();
 	for (auto it : m_vecPlayer)
 	{
 		GamePlayer* pPlayer = it;
@@ -24,14 +32,6 @@ void RoomBase::CleanUp()
 		OnReleasePlayer(pPlayer);
 	}
 	m_vecPlayer.clear();
-	m_mapPlayer.clear();
-
-	m_nOwnerGUID = 0;
-	m_nCreatorGUID = 0;
-	m_nCreateTime = 0;
-	m_bAlive = false;
-	m_nRoomID = 0;
-	m_pContainer = nullptr;
 }
 
 void RoomBase::Init(int64_t nRoomID, RoomContainer* pContainer)
