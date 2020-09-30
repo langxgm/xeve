@@ -12,12 +12,12 @@
 #include <string>
 #include <memory>
 
-template<typename key, typename value>
+template<typename k_type, typename v_type>
 class RoomRegistry
 {
 public:
-	typedef key key_type;
-	typedef value value_type;
+	typedef k_type key_type;
+	typedef v_type value_type;
 	typedef typename std::add_pointer<value_type>::type value_ptr_type;
 	typedef typename std::remove_pointer<value_type>::type value_nonptr_type;
 	typedef std::map<key_type, value_ptr_type> map_type;
