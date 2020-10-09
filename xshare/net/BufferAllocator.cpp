@@ -138,7 +138,7 @@ uint64_t MemState::Count()
 bool MemState::IsTimeout()
 {
 	auto nNowSeconds = TimeUtil::GetCurrentTimeSeconds();
-	return m_nStartTime - nNowSeconds >= m_nIntervalTime;
+	return nNowSeconds - m_nStartTime >= m_nIntervalTime;
 }
 
 void MemState::Reset()
@@ -146,5 +146,4 @@ void MemState::Reset()
 	m_nNewCount = 0;
 	m_nDelCount = 0;
 	m_nStartTime = 0;
-	m_nIntervalTime = 0;
 }
