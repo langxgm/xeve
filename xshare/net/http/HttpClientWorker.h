@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------
 #pragma once
 
+#include <map>
 #include <string>
 #include <memory>
 #include <functional>
@@ -30,7 +31,7 @@ typedef std::function<void(const std::shared_ptr<evpp::httpc::Response>&, evpp::
 extern void x_ssl_init_once();
 extern void x_ssl_clean();
 extern void* x_ssl_ctx();
-extern int x_ssl_certificate(const char *CAfile);
+extern int x_ssl_certificate(const char* CAfile);
 #endif
 
 class HttpClientWorker
@@ -81,14 +82,14 @@ public:
 	//------------------------------------------------------------------------
 	// 执行HTTP-POST请求(使用连接池)
 	//------------------------------------------------------------------------
-	virtual void DoPost(const evpp::httpc::Handler& h, const std::string& uri_with_param, const std::string& body);
-	virtual void DoPost(const HttpHandler& h, const std::string& uri_with_param, const std::string& body);
+	virtual void DoPost(const evpp::httpc::Handler& h, const std::string& uri_with_param, const std::string& body, const std::map<std::string, std::string>& headers);
+	virtual void DoPost(const HttpHandler& h, const std::string& uri_with_param, const std::string& body, const std::map<std::string, std::string>& headers);
 
 	//------------------------------------------------------------------------
 	// 执行HTTP-POST请求(新建连接)
 	//------------------------------------------------------------------------
-	virtual void DoPostWithUrl(const evpp::httpc::Handler& h, const std::string& url, const std::string& body, double timeout);
-	virtual void DoPostWithUrl(const HttpHandler& h, const std::string& url, const std::string& body, double timeout);
+	virtual void DoPostWithUrl(const evpp::httpc::Handler& h, const std::string& url, const std::string& body, double timeout, const std::map<std::string, std::string>& headers);
+	virtual void DoPostWithUrl(const HttpHandler& h, const std::string& url, const std::string& body, double timeout, const std::map<std::string, std::string>& headers);
 
 public:
 	//------------------------------------------------------------------------

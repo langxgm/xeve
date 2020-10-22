@@ -26,7 +26,7 @@ void* x_ssl_ctx()
 	return evpp::httpc::GetSSLCtx();
 }
 
-int x_ssl_certificate(const char *CAfile)
+int x_ssl_certificate(const char* CAfile)
 {
 	return SSL_CTX_load_verify_locations(evpp::httpc::GetSSLCtx(), CAfile, nullptr);
 }
@@ -112,35 +112,51 @@ void HttpClientWorker::DoGetWithUrl(const HttpHandler& h, const std::string& url
 	r->Execute(std::bind(h, std::placeholders::_1, l));
 }
 
-void HttpClientWorker::DoPost(const evpp::httpc::Handler& h, const std::string& uri_with_param, const std::string& body)
+void HttpClientWorker::DoPost(const evpp::httpc::Handler& h, const std::string& uri_with_param, const std::string& body, const std::map<std::string, std::string>& headers)
 {
 	auto l = m_pLoopPool->GetNextLoop();
 	auto r = new evpp::httpc::PostRequest(m_pConnPool.get(), l, uri_with_param, body);
 	r->AddHeader("Content-Type", "application/x-www-form-urlencoded");
+	for (auto& it : headers)
+	{
+		r->AddHeader(it.first, it.second);
+	}
 	r->Execute(h);
 }
 
-void HttpClientWorker::DoPost(const HttpHandler& h, const std::string& uri_with_param, const std::string& body)
+void HttpClientWorker::DoPost(const HttpHandler& h, const std::string& uri_with_param, const std::string& body, const std::map<std::string, std::string>& headers)
 {
 	auto l = m_pLoopPool->GetNextLoop();
 	auto r = new evpp::httpc::PostRequest(m_pConnPool.get(), l, uri_with_param, body);
 	r->AddHeader("Content-Type", "application/x-www-form-urlencoded");
+	for (auto& it : headers)
+	{
+		r->AddHeader(it.first, it.second);
+	}
 	r->Execute(std::bind(h, std::placeholders::_1, l));
 }
 
-void HttpClientWorker::DoPostWithUrl(const evpp::httpc::Handler& h, const std::string& url, const std::string& body, double timeout)
+void HttpClientWorker::DoPostWithUrl(const evpp::httpc::Handler& h, const std::string& url, const std::string& body, double timeout, const std::map<std::string, std::string>& headers)
 {
 	auto l = m_pLoopPool->GetNextLoop();
 	auto r = new evpp::httpc::PostRequest(l, url, body, evpp::Duration(timeout));
 	r->AddHeader("Content-Type", "application/x-www-form-urlencoded");
+	for (auto& it : headers)
+	{
+		r->AddHeader(it.first, it.second);
+	}
 	r->Execute(h);
 }
 
-void HttpClientWorker::DoPostWithUrl(const HttpHandler& h, const std::string& url, const std::string& body, double timeout)
+void HttpClientWorker::DoPostWithUrl(const HttpHandler& h, const std::string& url, const std::string& body, double timeout, const std::map<std::string, std::string>& headers)
 {
 	auto l = m_pLoopPool->GetNextLoop();
 	auto r = new evpp::httpc::PostRequest(l, url, body, evpp::Duration(timeout));
 	r->AddHeader("Content-Type", "application/x-www-form-urlencoded");
+	for (auto& it : headers)
+	{
+		r->AddHeader(it.first, it.second);
+	}
 	r->Execute(std::bind(h, std::placeholders::_1, l));
 }
 
