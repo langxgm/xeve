@@ -35,8 +35,8 @@ public:
 			m_nSum -= m_vecValues[m_nBeginIndex];
 			m_vecValues[m_nBeginIndex] = v;
 			m_nSum += v;
-			m_nBeginIndex = (++m_nBeginIndex % m_nMaxSize);
-			m_nEndIndex = (++m_nEndIndex % m_nMaxSize);
+			m_nBeginIndex = (m_nBeginIndex + 1) % m_nMaxSize;
+			m_nEndIndex = (m_nEndIndex + 1) % m_nMaxSize;
 		}
 		else
 		{
